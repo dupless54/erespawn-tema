@@ -125,15 +125,10 @@
   padding-inline: 0.5rem;
 }
 
-#reply-control .d-editor-textarea-wrapper,
-#reply-control .d-editor-preview {
-  min-height: 9rem;
-}
-
 .btn,
 .select-kit .select-kit-header,
-input,
-textarea {
+input:not(.d-editor-input),
+textarea:not(.d-editor-input) {
   min-height: 2.5rem;
 }
 
