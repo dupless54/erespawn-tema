@@ -1,0 +1,233 @@
+@use "lib/viewport";
+
+// Premium presentation for Discourse's native topic bulk-selection workflow.
+// Selection state, shift-click behavior, available actions, DMenu and DModal
+// mechanics remain core-owned.
+
+.bulk-select-topics-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bulk-select-topics-dropdown {
+  flex-wrap: wrap;
+  padding: 0.4rem 0.45rem;
+  background: var(--er-surface);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-radius-control);
+  box-shadow: var(--er-shadow-sm);
+
+  .btn-default {
+    min-height: 2.5rem;
+    border-color: var(--er-border);
+    border-radius: var(--er-radius-control);
+    background: var(--er-surface-subtle);
+    color: var(--er-text-soft);
+
+    &:focus-visible {
+      border-color: var(--er-accent);
+      box-shadow: var(--er-focus-ring);
+    }
+
+    .d-icon {
+      color: var(--er-accent);
+    }
+  }
+}
+
+.bulk-select-topic-dropdown__count {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.6rem;
+  background: var(--er-accent-soft);
+  border: 1px solid var(--er-accent-low);
+  border-radius: var(--d-border-radius-pill);
+  color: var(--er-accent);
+  font-size: var(--font-down-1);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+button.bulk-select {
+  border: 1px solid transparent;
+  border-radius: var(--er-radius-control);
+  color: var(--er-text-muted);
+  transition:
+    background-color var(--er-motion-fast) ease,
+    border-color var(--er-motion-fast) ease,
+    color var(--er-motion-fast) ease,
+    box-shadow var(--er-motion-fast) ease;
+
+  &:focus-visible {
+    border-color: var(--er-accent);
+    color: var(--er-accent);
+    box-shadow: var(--er-focus-ring);
+  }
+
+  html.discourse-no-touch &:hover {
+    background: var(--er-accent-soft);
+    border-color: var(--er-accent-low);
+    color: var(--er-accent);
+  }
+}
+
+.topic-list {
+  .topic-list-item.bulk-selecting > .topic-list-data {
+    cursor: pointer;
+    transition:
+      background-color var(--er-motion-fast) ease,
+      border-color var(--er-motion-fast) ease,
+      box-shadow var(--er-motion-fast) ease;
+  }
+
+  .topic-list-item.bulk-selected > .topic-list-data {
+    background: var(--er-accent-soft);
+    border-color: var(--er-accent-low);
+    box-shadow: inset 3px 0 0 var(--er-accent);
+  }
+
+  .topic-list-item.bulk-selected {
+    .title,
+    a.title {
+      color: var(--er-text);
+    }
+
+    .topic-excerpt,
+    .link-bottom-line,
+    .num,
+    .activity {
+      color: var(--er-text-soft);
+    }
+  }
+
+  .topic-list-data.bulk-select {
+    vertical-align: middle;
+
+    label {
+      display: grid;
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+      margin: 0;
+      padding: 0.45rem;
+      place-items: center;
+      border-radius: var(--er-radius-small);
+      cursor: pointer;
+
+      &:focus-within {
+        background: var(--er-accent-soft);
+        box-shadow: var(--er-focus-ring);
+      }
+    }
+  }
+
+  input.bulk-select {
+    inline-size: 1.1rem;
+    block-size: 1.1rem;
+    min-width: 1.1rem;
+    min-height: 1.1rem;
+    margin: 0;
+    accent-color: var(--er-accent);
+    cursor: pointer;
+  }
+
+  .bulk-select-enabled {
+    .pull-left label {
+      display: grid;
+      width: 2.5rem;
+      height: 2.5rem;
+      place-items: center;
+      border: 1px solid var(--er-border);
+      border-radius: var(--er-radius-control);
+      background: var(--er-surface-subtle);
+      cursor: pointer;
+
+      &:focus-within {
+        border-color: var(--er-accent);
+        box-shadow: var(--er-focus-ring);
+      }
+    }
+  }
+}
+
+html.discourse-no-touch {
+  .topic-list .topic-list-item.bulk-selecting:not(.bulk-selected):hover
+    > .topic-list-data {
+    background: var(--er-surface-hover);
+    border-color: var(--er-border-strong);
+  }
+}
+
+.topic-bulk-actions-modal {
+  .topic-bulk-actions-modal__description {
+    margin-bottom: 1rem;
+    padding: 0.75rem 0.85rem;
+    background: var(--er-surface-subtle);
+    border: 1px solid var(--er-border-soft);
+    border-radius: var(--er-radius-control);
+    color: var(--er-text-soft);
+    line-height: 1.55;
+  }
+
+  .topic-bulk-actions-modal__errors {
+    margin-bottom: 1rem;
+    padding: 0.8rem 0.9rem;
+    background: color-mix(in srgb, var(--danger) 8%, var(--er-surface));
+    border: 1px solid color-mix(in srgb, var(--danger) 22%, var(--er-border));
+    border-radius: var(--er-radius-control);
+    color: var(--er-text-soft);
+  }
+
+  .category-chooser .select-kit-header,
+  .select-kit .select-kit-header,
+  input,
+  textarea {
+    border-radius: var(--er-radius-control);
+  }
+}
+
+@include viewport.until(sm) {
+  .bulk-select-topics-actions,
+  .bulk-select-topics-dropdown {
+    width: 100%;
+  }
+
+  .bulk-select-topics-dropdown {
+    box-sizing: border-box;
+    justify-content: space-between;
+    gap: 0.4rem;
+    padding: 0.45rem;
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+    box-shadow: none;
+
+    .btn-default {
+      flex: 1 1 auto;
+      justify-content: space-between;
+    }
+  }
+
+  .bulk-select-topic-dropdown__count {
+    min-height: 2.25rem;
+  }
+
+  .topic-list {
+    .topic-list-item.bulk-selected > .topic-list-data {
+      border-color: var(--er-accent-low);
+      box-shadow: inset 3px 0 0 var(--er-accent);
+    }
+
+    .bulk-select-enabled {
+      .pull-left {
+        margin-right: 0.55rem;
+      }
+
+      .pull-left label {
+        width: 2.6rem;
+        height: 2.6rem;
+      }
+    }
+  }
+}
