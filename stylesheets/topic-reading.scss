@@ -1,0 +1,519 @@
+@use "lib/viewport";
+
+// Topic reading shell --------------------------------------------------------
+#topic-title {
+  box-sizing: border-box;
+  max-width: calc(
+    var(--topic-avatar-width) + var(--topic-body-width) +
+      var(--topic-body-width-padding) + var(--topic-body-width-padding)
+  );
+  padding: 1rem 1.15rem;
+  background: color-mix(in srgb, var(--er-surface) 97%, transparent);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+
+  .title-wrapper {
+    gap: 0.25rem 0.5rem;
+  }
+
+  h1 {
+    color: var(--er-text);
+    font-weight: 750;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  .topic-statuses {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+
+    .d-icon {
+      color: var(--er-accent);
+    }
+  }
+
+  .topic-category,
+  .discourse-tags {
+    margin-top: 0.45rem;
+  }
+}
+
+.topic-title-outlet:not(:empty) {
+  margin-bottom: 0.75rem;
+}
+
+// Topic map / reading summary ----------------------------------------------
+.topic-map {
+  background: var(--er-surface-raised);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+
+  &.--op {
+    border-top: 1px solid var(--er-border);
+    border-bottom: 1px solid var(--er-border);
+  }
+
+  .--users-summary .avatar {
+    outline: 2px solid var(--er-avatar-ring);
+    box-shadow: 0 0 0 1px var(--er-border-soft);
+  }
+
+  &__contents {
+    .topic-map__stats {
+      gap: 0.4rem;
+
+      .fk-d-menu__trigger,
+      .topic-map__stat {
+        min-height: 2.25rem;
+        padding: 0.28rem 0.58rem;
+        background: var(--er-stat-surface);
+        border: 1px solid var(--er-border-soft);
+        border-radius: var(--er-radius-control);
+        transition:
+          background-color var(--er-motion-fast) ease,
+          border-color var(--er-motion-fast) ease,
+          box-shadow var(--er-motion-fast) ease;
+
+        .number {
+          color: var(--er-accent);
+          font-weight: 700;
+        }
+
+        .topic-map__stat-label {
+          color: var(--er-text-muted);
+        }
+
+        &:hover,
+        &:focus-visible {
+          .discourse-no-touch & {
+            background: var(--er-surface-hover);
+            border-color: var(--er-accent-low);
+          }
+        }
+      }
+    }
+  }
+
+  .estimated-read-time {
+    padding: 0.3rem 0.55rem;
+    background: var(--er-stat-surface);
+    border: 1px solid var(--er-border-soft);
+    border-radius: var(--er-radius-control);
+    color: var(--er-text-soft);
+
+    span:first-child {
+      color: var(--er-text-muted);
+    }
+  }
+
+  &__buttons .btn,
+  .controls .btn {
+    border-radius: var(--er-radius-control);
+  }
+}
+
+// Premium post cards --------------------------------------------------------
+.topic-post {
+  --d-post-control-border-radius: var(--er-radius-control);
+  --d-post-control-background--hover: var(--er-surface-hover);
+
+  .topic-body {
+    position: relative;
+    border-color: var(--er-border);
+    box-shadow: var(--er-shadow-sm);
+    transition:
+      background-color var(--er-motion-fast) ease,
+      border-color var(--er-motion-fast) ease,
+      box-shadow var(--er-motion-medium) var(--er-ease);
+  }
+
+  &:focus-within .topic-body {
+    border-color: var(--er-border-strong);
+  }
+
+  .topic-avatar .avatar {
+    outline: 3px solid var(--er-avatar-ring);
+    box-shadow:
+      0 0 0 1px var(--er-border),
+      0 8px 22px color-mix(in srgb, var(--primary) 9%, transparent);
+  }
+
+  .topic-meta-data {
+    padding-block-start: 0.62rem;
+    padding-block-end: 0.62rem;
+    border-bottom: 1px solid var(--er-border-soft);
+
+    .names {
+      gap: 0.15rem;
+
+      .username,
+      span.first a {
+        color: var(--er-text);
+        font-weight: 700;
+        letter-spacing: -0.008em;
+      }
+
+      .full-name,
+      .user-title,
+      .user-status-message {
+        color: var(--er-text-muted);
+      }
+    }
+
+    .post-info a,
+    .post-info .d-icon {
+      color: var(--er-text-muted);
+    }
+  }
+
+  .topic-body .cooked {
+    padding-block: 0.85rem 0.95rem;
+  }
+
+  nav.post-controls {
+    margin-top: 0.35rem;
+    padding-top: 0.62rem;
+    border-top: 1px solid var(--er-border-soft);
+
+    .actions {
+      gap: 0.18rem;
+    }
+
+    .actions button,
+    .actions a,
+    .btn.show-replies {
+      min-height: 2.25rem;
+      border-radius: var(--er-radius-control);
+      transition:
+        background-color var(--er-motion-fast) ease,
+        color var(--er-motion-fast) ease,
+        box-shadow var(--er-motion-fast) ease;
+    }
+
+    .actions button:focus-visible,
+    .actions a:focus-visible,
+    .btn.show-replies:focus-visible {
+      outline: 2px solid var(--er-accent);
+      outline-offset: 1px;
+      box-shadow: var(--er-focus-ring);
+    }
+
+    .post-action-menu__like.has-like,
+    .post-action-menu__like-count.has-liked {
+      color: var(--er-love);
+    }
+  }
+}
+
+.topic-post:not(.deleted):hover .topic-body {
+  .discourse-no-touch & {
+    border-color: var(--er-border-strong);
+    box-shadow: 0 14px 34px color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+}
+
+// Rich post content ---------------------------------------------------------
+.cooked,
+.d-editor-preview {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--er-text);
+    letter-spacing: -0.016em;
+    text-wrap: balance;
+  }
+
+  h2,
+  h3 {
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--er-border-soft);
+  }
+
+  a:not(.mention, .mention-group, .hashtag-cooked) {
+    color: var(--er-accent);
+    text-decoration-color: color-mix(in srgb, var(--er-accent) 38%, transparent);
+    text-underline-offset: 0.16em;
+  }
+
+  hr {
+    height: 1px;
+    margin-block: 1.6rem;
+    background: var(--er-border);
+    border: 0;
+  }
+
+  img:not(.emoji, .avatar, .thumbnail, .ytp-thumbnail-image) {
+    border-radius: var(--er-radius-control);
+    box-shadow: 0 8px 26px color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+
+  .onebox,
+  .onebox-result {
+    background: var(--er-surface-raised);
+    border-color: var(--er-border);
+    border-radius: var(--er-radius-control);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) 6%, transparent);
+  }
+
+  .md-table {
+    background: var(--er-surface-raised);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-control);
+
+    th {
+      background: var(--er-surface-subtle);
+      color: var(--er-text);
+      font-weight: 675;
+    }
+
+    td,
+    th {
+      border-color: var(--er-border-soft);
+    }
+  }
+}
+
+aside.quote {
+  background: var(--er-surface-subtle);
+  border: 1px solid var(--er-border);
+  border-inline-start: 3px solid var(--er-accent);
+  border-radius: var(--er-radius-control);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary) 3%, transparent);
+
+  > .title {
+    padding: 0.72rem 0.82rem 0.42rem;
+    background: transparent;
+    border-inline-start: 0;
+    color: var(--er-text-soft);
+    font-weight: 600;
+  }
+
+  > blockquote {
+    padding: 0.45rem 0.82rem 0.82rem;
+    background: transparent;
+    border: 0;
+    color: var(--er-text-soft);
+  }
+
+  .quote-controls,
+  .quote-controls .d-icon {
+    color: var(--er-text-muted);
+  }
+}
+
+// Timeline / progress -------------------------------------------------------
+@media screen and (width >= 925px) {
+  .container.posts .topic-navigation .timeline-container:not(.timeline-fullscreen) {
+    .topic-timeline {
+      padding: 0.7rem 0.55rem;
+      background: color-mix(in srgb, var(--er-surface) 96%, transparent);
+      border: 1px solid var(--er-border);
+      border-radius: var(--er-radius-card);
+      box-shadow: var(--er-shadow-sm);
+    }
+
+    .timeline-controls .btn,
+    .timeline-footer-controls .btn {
+      border: 1px solid var(--er-border-soft);
+      border-radius: var(--er-radius-control);
+      background: var(--er-stat-surface);
+    }
+
+    .timeline-scrollarea {
+      border-left-color: var(--er-accent-low);
+    }
+
+    .timeline-handle {
+      background: var(--er-accent);
+      box-shadow: 0 0 0 2px var(--er-accent-soft);
+    }
+
+    .timeline-replies {
+      color: var(--er-text);
+      font-weight: 725;
+    }
+
+    .timeline-ago,
+    .start-date,
+    .now-date {
+      color: var(--er-text-muted);
+    }
+  }
+}
+
+#topic-progress-wrapper #topic-progress {
+  background: var(--er-surface);
+  border-color: var(--er-accent-low);
+  border-radius: var(--er-radius-control);
+  color: var(--er-accent);
+  box-shadow: var(--er-shadow-sm);
+
+  .bg {
+    background: var(--er-accent-soft);
+  }
+}
+
+// Topic footer --------------------------------------------------------------
+#topic-footer-buttons {
+  padding: 0.75rem;
+  background: color-mix(in srgb, var(--er-surface) 97%, transparent);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+
+  .topic-footer-main-buttons .btn,
+  .topic-notifications-button .btn,
+  .pinned-button .btn {
+    border-radius: var(--er-radius-control);
+  }
+}
+
+.topic-status-info,
+.topic-timer-info {
+  border-top-color: var(--er-border);
+}
+
+// Composer shell. Do not set editor/reply-area height or clipping. ----------
+#reply-control {
+  background: color-mix(in srgb, var(--er-surface) 98%, transparent);
+  border-top: 1px solid var(--er-border);
+  box-shadow: 0 -18px 50px color-mix(in srgb, var(--primary) 12%, transparent);
+
+  .grippie {
+    background: var(--er-surface-subtle);
+    border-color: var(--er-border);
+  }
+
+  .reply-to,
+  .title-and-category,
+  .composer-fields {
+    border-color: var(--er-border);
+  }
+
+  .d-editor-button-bar .btn,
+  .composer-controls .btn,
+  .composer-actions .btn {
+    border-radius: var(--er-radius-control);
+  }
+
+  .d-editor-textarea-wrapper {
+    background: var(--er-surface);
+    border-color: var(--er-border);
+  }
+
+  .d-editor-preview,
+  .d-editor-preview-wrapper {
+    background: var(--er-surface-raised);
+  }
+
+  .save-or-cancel .btn-primary {
+    box-shadow: 0 7px 20px color-mix(in srgb, var(--er-accent) 20%, transparent);
+  }
+}
+
+:where(.uc-enable-composer-redesign) {
+  #reply-control {
+    .reply-to,
+    .title-and-category,
+    .category-input,
+    .user-selector,
+    .tags-input,
+    .composer-footer,
+    .d-editor-preview-wrapper {
+      border-color: var(--er-border);
+    }
+
+    .composer-footer {
+      background: var(--er-surface-raised);
+    }
+
+    .d-editor-textarea-wrapper {
+      background: var(--er-surface);
+    }
+
+    .title-input #reply-title::placeholder,
+    .d-editor-input::placeholder {
+      color: var(--er-text-muted);
+    }
+  }
+}
+
+@include viewport.until(sm) {
+  #topic-title {
+    margin-bottom: 0.7rem;
+    padding: 0.82rem 0.85rem;
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+
+    h1 {
+      font-size: var(--font-up-2);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  .topic-map {
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+    box-shadow: 0 3px 14px color-mix(in srgb, var(--primary) 5%, transparent);
+
+    &__contents .topic-map__stats {
+      gap: 0.3rem;
+
+      .fk-d-menu__trigger,
+      .topic-map__stat {
+        min-height: 2rem;
+        padding: 0.22rem 0.45rem;
+      }
+    }
+  }
+
+  .topic-post {
+    .topic-avatar .avatar {
+      outline-width: 2px;
+    }
+
+    .topic-meta-data {
+      padding-block: 0.48rem;
+    }
+
+    .topic-body .cooked {
+      padding-block: 0.7rem 0.8rem;
+    }
+
+    nav.post-controls {
+      padding-top: 0.5rem;
+    }
+  }
+
+  .cooked,
+  .d-editor-preview {
+    h2,
+    h3 {
+      padding-bottom: 0.22rem;
+    }
+
+    img:not(.emoji, .avatar, .thumbnail, .ytp-thumbnail-image) {
+      border-radius: clamp(8px, var(--er-radius-control), 12px);
+      box-shadow: 0 5px 18px color-mix(in srgb, var(--primary) 7%, transparent);
+    }
+  }
+
+  #topic-footer-buttons {
+    padding: 0.6rem;
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+  }
+
+  #reply-control {
+    box-shadow: 0 -10px 30px color-mix(in srgb, var(--primary) 11%, transparent);
+  }
+}
