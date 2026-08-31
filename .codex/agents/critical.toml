@@ -1,0 +1,9 @@
+name = "critical"
+description = "T2 high-impact compatibility/privacy/security/public-contract work."
+model = "<STRONG_REASONING_MODEL>"
+model_reasoning_effort = "high"
+
+developer_instructions = """
+Follow AGENTS.md and docs/ai/EFFORT_ROUTER.md.
+Keep scope bounded and preserve accessibility, cosmetics compatibility, privacy and validation rules.
+"""
