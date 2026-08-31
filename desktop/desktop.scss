@@ -1,5 +1,5 @@
-// Desktop-only refinements. The shared layer remains the source of truth for
-// color, spacing and component behavior so light/dark mode stays automatic.
+// Desktop-only refinements. Shared color/component behavior stays in
+// common/common.scss so light/dark mode and tablet behavior remain coherent.
 
 .d-header .wrap {
   min-height: 3.75rem;
@@ -7,6 +7,15 @@
 
 .d-header .contents {
   gap: 0.75rem;
+}
+
+.d-header .title {
+  padding-inline-end: 0.5rem;
+}
+
+.d-header .d-header-icons .icon {
+  min-width: 2.55rem;
+  min-height: 2.55rem;
 }
 
 #main-outlet {
@@ -19,10 +28,22 @@
 }
 
 .sidebar-wrapper {
-  padding-inline-end: 0.35rem;
+  padding-inline-end: 0.55rem;
+
+  .sidebar-sections {
+    padding-block: 0.4rem;
+  }
 }
 
 .topic-list {
+  .main-link {
+    min-width: 25rem;
+  }
+
+  .posters {
+    width: 7.5rem;
+  }
+
   .posts,
   .views,
   .activity {
@@ -41,8 +62,37 @@
     }
 
     &:hover .topic-list-data {
-      box-shadow: 0 10px 28px color-mix(in srgb, var(--primary) 7%, transparent);
+      box-shadow: 0 12px 32px color-mix(in srgb, var(--primary) 8%, transparent);
     }
+  }
+}
+
+.latest-topic-list-item {
+  min-height: 4.3rem;
+
+  .topic-poster .avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.category-list tbody tr > td.category:first-child {
+  border-inline-start-width: 4px;
+  border-inline-start-color: var(--category-badge-color, var(--er-accent));
+}
+
+.category-boxes,
+.category-boxes-with-topics {
+  --category-boxes-min-width: 18rem;
+}
+
+.category-list.with-topics {
+  .category {
+    width: 46%;
+  }
+
+  .latest {
+    padding-inline-start: 1rem;
   }
 }
 

@@ -3,24 +3,26 @@
 Last updated: 2026-08-31
 
 ## Repository state
-- New Discourse theme repository bootstrapped from an empty repo.
+- Premium foundation is merged to `main`.
 - Canonical minimum-token agent rules live in root `AGENTS.md`.
-- Development branch: `feat/premium-theme-foundation`.
+- Active development branch: `feat/premium-topic-discovery-v2`.
 - Target: current/latest Discourse theme APIs and official theme skeleton.
 
-## Active foundation phase
-1. Two native theme color schemes are defined: `eRespawn Light` and `eRespawn Dark`.
-2. Runtime SCSS consumes Discourse CSS custom properties; palette HEX values live only in `about.json` color-scheme metadata.
-3. Semantic color/settings aliases live in Discourse's special `common/color_definitions.scss` target; shared UI lives in `common/common.scss`; device refinements live in `desktop/desktop.scss` and `mobile/mobile.scss`.
-4. Topic lists support native classic table markup and current Glimmer `latest-topic-list-item` markup without template replacement.
-5. Header/search, navigation/filter pills, post stream, quotes/code, composer, menus and modals have the first SaaS-quality premium pass.
-6. Theme settings provide functional topic cards, card radius, content width, topic density and header blur controls.
-7. Preserve native accessibility, routing, moderation controls, and plugin-provided avatar/name cosmetics.
+## Active premium discovery phase
+1. Preserve the two native color schemes: `eRespawn Light` and `eRespawn Dark`.
+2. Keep runtime colors derived from Discourse CSS custom properties; palette HEX values remain only in `about.json` metadata.
+3. Upgrade semantic tokens with raised/active/stat surfaces, stronger elevation tokens and cross-browser-safe radius/gap calculations.
+4. Push classic Glimmer topic rows and `latest-topic-list-item` toward a social/SaaS content-card hierarchy without replacing native templates.
+5. Make unread/unseen, pinned, visited, closed, selected and bulk-selected states visually distinct while preserving core behavior.
+6. Upgrade header/search, sidebar, navigation/filter pills and category discovery tables/cards as one coherent shell.
+7. Keep hover as enhancement only; touch/mobile receives complete persistent states without relying on hover.
+8. Preserve native accessibility, routing, moderation controls, composer geometry and plugin-provided avatar/name cosmetics.
 
 ## Design direction
-- Modern SaaS/community product aesthetic with restrained elevation and generous readable spacing.
-- Slate-based neutral surfaces with indigo/sky accents; no pure black or pure white palette endpoints.
-- Light and dark mode must retain the same hierarchy and interaction semantics.
+- Modern SaaS/community product aesthetic with restrained elevation, soft state surfaces and deliberate density.
+- Topic titles carry the strongest hierarchy; category/tag metadata and reply/view/activity stats are compact secondary chips.
+- Category discovery should feel like a curated product directory instead of an unstyled forum table.
+- Light and dark mode retain identical hierarchy and interaction semantics.
 - Desktop, tablet, mobile and very small widths must feel intentionally designed rather than simply scaled down.
 
 ## Compatibility invariants
@@ -28,8 +30,11 @@ Last updated: 2026-08-31
 - Optional plugin markup may be enhanced but never required.
 - Avoid broad `overflow: hidden`, masks, transforms, pseudo-element replacement, or z-index resets on user/avatar/name wrappers.
 - Avoid template overrides when stable native selectors and theme APIs are sufficient.
+- Do not force composer/editor heights; Discourse owns composer resize and save-area geometry.
+- Avoid CSS typed arithmetic that has uneven browser support when an explicit token or `clamp()` can express the same result.
 
 ## Next validation gate
-- Required Discourse Theme GitHub Action on the exact PR head.
-- Verify theme compilation for color definitions plus `common`, `desktop` and `mobile` targets.
-- Review changed paths against task scope and inspect any lint/system-test failure before merge.
+- Open PR from `feat/premium-topic-discovery-v2` to `main`.
+- Required official Discourse Theme GitHub Action must be GREEN on the exact PR head.
+- Verify Ember Build and the shared core-feature system test, including topic reply/composer flow.
+- Review changed paths against task scope before merge.
