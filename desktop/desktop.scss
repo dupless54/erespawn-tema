@@ -4,7 +4,6 @@
 
 // Desktop-only refinements. Shared color/component behavior stays in
 // common/common.scss so light/dark mode and tablet behavior remain coherent.
-
 .d-header .wrap {
   min-height: 3.75rem;
 }
@@ -66,7 +65,10 @@
     }
 
     &:hover .topic-list-data {
-      box-shadow: 0 12px 32px color-mix(in srgb, var(--primary) 8%, transparent);
+      box-shadow: 0
+        12px
+        32px
+        color-mix(in srgb, var(--primary) 8%, transparent);
     }
   }
 }

@@ -242,7 +242,11 @@
 
   a:not(.mention, .mention-group, .hashtag-cooked) {
     color: var(--er-accent);
-    text-decoration-color: color-mix(in srgb, var(--er-accent) 38%, transparent);
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--er-accent) 38%,
+      transparent
+    );
     text-underline-offset: 0.16em;
   }
 
@@ -314,7 +318,9 @@ aside.quote {
 
 // Timeline / progress -------------------------------------------------------
 @media screen and (width >= 925px) {
-  .container.posts .topic-navigation .timeline-container:not(.timeline-fullscreen) {
+  .container.posts
+    .topic-navigation
+    .timeline-container:not(.timeline-fullscreen) {
     .topic-timeline {
       padding: 0.7rem 0.55rem;
       background: color-mix(in srgb, var(--er-surface) 96%, transparent);

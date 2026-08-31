@@ -71,3 +71,12 @@ The theme may style DModal backgrounds, borders, top corners, headers, bodies an
 
 ## D-024 — Shared auxiliary CSS is a `stylesheets/` module
 Auth, preferences, directory, badges and modal chrome shared across device targets live in `stylesheets/auxiliary-surfaces.scss`. Device entrypoints only load that module and keep genuinely device-specific refinements.
+
+## D-025 — Static lint is a second exact-head merge gate
+The official reusable Discourse Theme workflow remains the browser/core compatibility authority. A separate read-only static job must also pass on the same exact PR head using the current pinned official Discourse Stylelint and Prettier configurations.
+
+## D-026 — Do not silently introduce unlinted JavaScript
+While the theme has no JavaScript/TypeScript sources, the static job guards that boundary. If JS/TS is introduced, CI must fail until the current official Discourse ESLint/TypeScript dependency lock and configuration are added rather than allowing unlinted theme code.
+
+## D-027 — Formatting findings are fixed, not suppressed
+Stylelint and Prettier rules are not disabled merely to obtain GREEN. Formatting remediation must match the pinned official tool output; exact generated blob hashes may be used to verify byte-for-byte equivalence when practical.

@@ -6,6 +6,82 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     uses: discourse/.github/.github/workflows/discourse-theme.yml@v1
+
+  static-lint:
+    name: Static CSS and format lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out theme
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install pinned Discourse lint toolchain
+        shell: bash
+        run: |
+          TOOL_DIR="$RUNNER_TEMP/erespawn-theme-lint"
+          mkdir -p "$TOOL_DIR"
+          cd "$TOOL_DIR"
+          npm init -y >/dev/null 2>&1
+          npm install \
+            --ignore-scripts \
+            --no-audit \
+            --no-fund \
+            --save-exact \
+            prettier@3.8.1 \
+            stylelint@17.5.0 \
+            @discourse/lint-configs@3.2.0
+          echo "TOOL_DIR=$TOOL_DIR" >> "$GITHUB_ENV"
+          echo "NODE_PATH=$TOOL_DIR/node_modules" >> "$GITHUB_ENV"
+
+      - name: Guard JavaScript lint coverage
+        shell: bash
+        run: |
+          js_files=$(find javascripts test -type f \
+            \( -name '*.js' -o -name '*.gjs' -o -name '*.ts' -o -name '*.gts' -o -name '*.mts' -o -name '*.cts' \) \
+            -print 2>/dev/null || true)
+
+          if [ -n "$js_files" ]; then
+            echo "::error::JavaScript/TypeScript sources exist, but this CSS-only theme does not yet carry the official ESLint/TypeScript dependency lock. Add the current Discourse JS lint toolchain before merging JS sources."
+            printf '%s\n' "$js_files"
+            exit 1
+          fi
+
+          echo "No theme JavaScript/TypeScript sources detected."
+
+      - name: Stylelint
+        shell: bash
+        run: |
+          "$TOOL_DIR/node_modules/.bin/stylelint" \
+            '{javascripts,desktop,mobile,common,scss,stylesheets}/**/*.scss' \
+            --allow-empty-input \
+            --config "$GITHUB_WORKSPACE/stylelint.config.mjs" \
+            --config-basedir "$TOOL_DIR/node_modules"
+
+      - name: Prettier
+        shell: bash
+        run: |
+          "$TOOL_DIR/node_modules/.bin/prettier" \
+            '{javascripts,desktop,mobile,common,scss,stylesheets}/**/*.scss' \
+            --write \
+            --no-error-on-unmatched-pattern \
+            --config "$GITHUB_WORKSPACE/.prettierrc.cjs"
+
+          if ! git diff --quiet -- .; then
+            echo "Prettier formatting changes are required:"
+            git diff --check
+            git diff -- .
+            echo "::error::Run the pinned Discourse Prettier configuration and commit the resulting formatting changes."
+            exit 1
+          fi
