@@ -1,0 +1,78 @@
+.category-list,
+.category-boxes .category-box,
+.search-container .search-advanced-sidebar,
+.search-results .fps-result,
+.user-content,
+.user-stream .item,
+.bookmark-list .bookmark-list-item {
+  border-color: var(--er-border);
+}
+
+.category-boxes .category-box {
+  background: var(--er-surface-raised);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-card-radius);
+  box-shadow: var(--er-shadow-sm);
+  transition:
+    border-color var(--er-motion-fast) ease,
+    box-shadow var(--er-motion-medium) var(--er-ease),
+    transform var(--er-motion-medium) var(--er-ease);
+
+  &:hover {
+    .discourse-no-touch & {
+      border-color: var(--er-border-strong);
+      box-shadow: var(--er-shadow-md);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.topic-post {
+  .topic-body {
+    border-top-color: var(--er-border);
+  }
+
+  .contents {
+    border-radius: var(--er-radius-md);
+  }
+}
+
+.quote,
+blockquote {
+  border-inline-start-color: var(--tertiary);
+  border-radius: 0 var(--er-radius-sm) var(--er-radius-sm) 0;
+  background: var(--er-surface-muted);
+}
+
+#reply-control {
+  border-top: 1px solid var(--er-border);
+  box-shadow: 0 -14px 40px rgb(0 0 0 / 0.08);
+
+  .d-editor-textarea-wrapper,
+  .composer-popup,
+  .composer-fields .select-kit-header {
+    border-color: var(--er-border);
+  }
+}
+
+.modal-inner-container,
+.d-modal__container,
+.menu-panel {
+  background: var(--er-surface-raised);
+}
+
+.search-menu .search-input,
+.search-menu-container .search-input,
+.search-container .search-header {
+  border-color: var(--er-border);
+  border-radius: var(--er-radius-md);
+}
+
+// Keep plugin-owned cosmetic layers unconstrained.
+.user-card .card-content,
+.user-card .first-row,
+.user-card .usercard-controls,
+.user-main .about,
+.user-profile-primary-outlet {
+  overflow: visible;
+}
