@@ -1,0 +1,291 @@
+@use "lib/viewport";
+
+// Premium presentation for the native Discourse review queue. Review data,
+// filtering, claiming, actions, collapsed-post behavior and responsive layout
+// remain core-owned.
+.reviewable {
+  .reviewable-top-nav {
+    padding: 0.4rem;
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+  }
+
+  .reviewable-container {
+    gap: 1rem;
+  }
+
+  .reviewable-filters {
+    background: var(--er-surface);
+    border-color: var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+
+    .filter-label,
+    .name {
+      color: var(--er-text-soft);
+      font-weight: 625;
+    }
+
+    .select-kit-header,
+    input,
+    .d-date-time-input {
+      background: var(--er-surface-subtle);
+      border-color: var(--er-border);
+      border-radius: var(--er-radius-control);
+    }
+
+    .select-kit-header:focus-visible,
+    input:focus-visible {
+      border-color: var(--er-accent);
+      box-shadow: var(--er-focus-ring);
+    }
+
+    .reviewable-filters-actions {
+      padding-top: 0.25rem;
+      border-top: 1px solid var(--er-border-soft);
+    }
+  }
+
+  .reviewable-list {
+    min-width: 0;
+  }
+
+  .reviewables {
+    display: grid;
+    gap: 1rem;
+  }
+}
+
+.reviewable-item {
+  margin-block: 0;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  background: var(--er-surface);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+  transition:
+    background-color var(--er-motion-fast) ease,
+    border-color var(--er-motion-fast) ease,
+    box-shadow var(--er-motion-medium) var(--er-ease);
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--er-border-strong);
+
+    .discourse-no-touch & {
+      box-shadow: var(--er-shadow-md);
+    }
+  }
+
+  &.reviewable-stale,
+  .reviewable-stale & {
+    opacity: 0.72;
+  }
+
+  .reviewable-meta-data {
+    gap: 0.45rem;
+    color: var(--er-text-muted);
+  }
+
+  .reviewable-type {
+    padding: 0.25rem 0.5rem;
+    background: var(--er-accent-soft);
+    border: 1px solid var(--er-accent-low);
+    border-radius: var(--d-border-radius-pill);
+    color: var(--er-accent);
+    font-weight: 700;
+    letter-spacing: 0.035em;
+  }
+
+  .created-at,
+  .reply-count,
+  .score,
+  .show-raw-email {
+    color: var(--er-text-muted);
+  }
+
+  .post-topic {
+    margin-bottom: 0.85rem;
+    padding: 0.72rem 0.8rem;
+    background: var(--er-surface-subtle);
+    border: 1px solid var(--er-border-soft);
+    border-radius: var(--er-radius-control);
+    color: var(--er-text-muted);
+
+    .title-text {
+      color: var(--er-text);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+  }
+
+  .post-contents-wrapper {
+    gap: 0.85rem;
+  }
+
+  .post-contents {
+    min-width: 0;
+  }
+
+  .post-body {
+    padding: 0.85rem 0.9rem;
+    background: var(--er-surface-raised);
+    border: 1px solid var(--er-border-soft);
+    border-radius: var(--er-radius-control);
+    color: var(--er-text-soft);
+
+    blockquote {
+      background: var(--er-surface-subtle);
+      border-inline-start-color: var(--er-accent);
+      border-radius: var(--er-radius-small);
+    }
+
+    pre {
+      background: var(--er-surface-subtle);
+      border: 1px solid var(--er-border);
+      border-radius: var(--er-radius-small);
+    }
+  }
+
+  .post-body__toggle-btn {
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-control);
+    color: var(--er-text-soft);
+    box-shadow: var(--er-shadow-sm);
+
+    .d-icon {
+      color: currentcolor;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: var(--er-accent-soft);
+      color: var(--er-accent);
+    }
+  }
+
+  .reviewable-actions {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--er-border-soft);
+
+    .btn {
+      border-radius: var(--er-radius-control);
+    }
+  }
+
+  .reviewable-score-reason,
+  .reviewable-conversation-post,
+  .editable-field {
+    padding: 0.65rem 0.72rem;
+    background: var(--er-surface-subtle);
+    border: 1px solid var(--er-border-soft);
+    border-radius: var(--er-radius-control);
+  }
+
+  .edit-reason,
+  .reviewable-history {
+    color: var(--er-text-soft);
+  }
+}
+
+.reviewable-scores {
+  color: var(--er-text-soft);
+
+  &__table-wrapper {
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-control);
+  }
+
+  th {
+    background: var(--er-surface-subtle);
+    color: var(--er-text);
+  }
+
+  td,
+  th {
+    border-color: var(--er-border-soft);
+  }
+}
+
+.reviewable-user-info {
+  .reviewable-user-fields,
+  .reviewable-user-details {
+    color: var(--er-text-soft);
+  }
+
+  .reviewable-user-details:not(:last-child) {
+    border-bottom-color: var(--er-border);
+  }
+
+  .name {
+    color: var(--er-text);
+  }
+}
+
+.reviewable-settings,
+.reviewable-histories {
+  padding: 1rem;
+  background: var(--er-surface);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+}
+
+.no-review {
+  margin-top: 0;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  background: var(--er-surface);
+  border: 1px dashed var(--er-border-strong);
+  border-radius: var(--er-radius-card);
+  color: var(--er-text-muted);
+  text-align: center;
+}
+
+@include viewport.until(sm) {
+  .reviewable {
+    .reviewable-top-nav {
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+    }
+
+    .reviewable-container {
+      gap: 0.65rem;
+    }
+
+    .reviewable-filters {
+      padding: 0.75rem;
+      background: var(--er-surface);
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+      box-shadow: none;
+    }
+  }
+
+  .reviewable-item {
+    padding: 0.82rem;
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+    box-shadow: 0 3px 14px color-mix(in srgb, var(--primary) 5%, transparent);
+
+    .reviewable-meta-data {
+      flex-wrap: wrap;
+    }
+
+    .post-topic,
+    .post-body {
+      padding: 0.7rem;
+    }
+
+    .reviewable-actions {
+      gap: 0.4rem;
+    }
+  }
+
+  .reviewable-settings,
+  .reviewable-histories,
+  .no-review {
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+  }
+}
