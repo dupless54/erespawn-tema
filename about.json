@@ -5,9 +5,35 @@
   "about_url": "https://github.com/dupless54/erespawn-tema",
   "license_url": "https://github.com/dupless54/erespawn-tema/blob/main/LICENSE",
   "learn_more": "https://github.com/dupless54/erespawn-tema#readme",
-  "theme_version": "0.1.0",
+  "theme_version": "0.2.0",
   "minimum_discourse_version": null,
   "maximum_discourse_version": null,
   "assets": {},
+  "color_schemes": {
+    "eRespawn Light": {
+      "primary": "1F2937",
+      "secondary": "F8FAFC",
+      "tertiary": "6366F1",
+      "quaternary": "0EA5E9",
+      "header_background": "F1F5F9",
+      "header_primary": "111827",
+      "highlight": "F4C95D",
+      "danger": "E11D48",
+      "success": "059669",
+      "love": "DB2777"
+    },
+    "eRespawn Dark": {
+      "primary": "E5E7EB",
+      "secondary": "0F172A",
+      "tertiary": "818CF8",
+      "quaternary": "38BDF8",
+      "header_background": "111827",
+      "header_primary": "F3F4F6",
+      "highlight": "D4A72C",
+      "danger": "FB7185",
+      "success": "34D399",
+      "love": "F472B6"
+    }
+  },
   "modifiers": {}
 }
