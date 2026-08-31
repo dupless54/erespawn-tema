@@ -76,6 +76,11 @@
   }
 }
 
+.category-list tbody tr > td.category:first-child {
+  border-inline-start-width: 4px;
+  border-inline-start-color: var(--category-badge-color, var(--er-accent));
+}
+
 .category-boxes,
 .category-boxes-with-topics {
   --category-boxes-min-width: 18rem;
