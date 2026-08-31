@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.7.0 — 2026-08-31
+
+Premium community-utility pass built on the release-ready 0.6.0 foundation.
+
+### Bookmarks
+- Added premium search, list-card, reminder metadata and excerpt presentation around the native `BookmarkList` structure.
+- Preserved native bookmark actions, reminders, bulk selection, topic/category/tag links and plugin outlets.
+- Added mobile-specific bookmark-card refinement without replacing current mobile bookmark markup.
+
+### Private messages
+- Added premium framing for current message inbox navigation, `DHorizontalOverflowNav`, inbox selector and navigation controls.
+- Kept private-message routes, topic-list behavior, unread/new states and composer entry points core-owned.
+- Added responsive navigation wrapping for narrow screens without replacing PM mechanics.
+
+### Groups
+- Added premium group-directory filters and `GroupCard` surfaces.
+- Added premium group-detail hero/navigation treatment around current `.container.group` markup.
+- Preserved group flair rendering, membership/actions, member directory grids and container-query behavior.
+
+### Tags
+- Added premium tags controls, sort options, `TagList` surfaces and tag pills.
+- Preserved native tag links, counts, PM-only indicators, admin controls and plugin outlets.
+
+### Compatibility and quality
+- Added the shared `stylesheets/community-utilities.scss` module to both desktop and mobile targets.
+- Introduced no theme JavaScript, route replacement or template override.
+- Kept avatar decorations, nameplates, group flairs and plugin cosmetic wrappers free of clipping, masking and z-index resets.
+- Added focused current-Discourse system smoke coverage for bookmarks, private messages, group detail and tags index.
+- Merge remains gated by exact-head static Stylelint/Prettier and official Discourse Theme CI.
+
 ## 0.6.0 — 2026-08-31
 
 First release-ready version of **eRespawn Premium**, a full theme for current Discourse releases.
