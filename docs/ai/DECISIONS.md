@@ -23,3 +23,15 @@ Light/dark HEX values belong in `about.json` color schemes. Runtime SCSS must co
 
 ## D-008 — Color definitions are a special Discourse target
 Use `common/color_definitions.scss` for theme CSS custom-property declarations that must follow the active color scheme. Do not import it as a generic helper from `common/common.scss`; Discourse compiles it as the color-definitions target. General reusable SCSS helpers, when needed, belong under `stylesheets/`.
+
+## D-009 — Social-feed hierarchy without row replacement
+The premium topic/discovery experience should be achieved with stable core classes, CSS, supported modifiers/transformers/outlets when needed, and native Glimmer markup. Do not replace `topic-list-item` merely to obtain a card aesthetic.
+
+## D-010 — Hover is progressive enhancement
+Use `.discourse-no-touch` for lift/shadow hover effects. Touch devices must expose the complete navigation, state and metadata model without hover.
+
+## D-011 — Core state semantics remain visible
+Unread/unseen, pinned, closed, visited, selected and bulk-selected topic states may receive stronger visual hierarchy, but the theme must not suppress the core badges, status components, links or keyboard focus behavior that communicate those states.
+
+## D-012 — Prefer explicit cross-browser tokens over typed arithmetic
+Avoid CSS typed-arithmetic multiplication/division for theme sizing when browser support is uneven. Use explicit semantic tokens, subtraction where safe, or `clamp()` to preserve predictable Firefox/Chromium/WebKit behavior.

@@ -1,5 +1,6 @@
-// Mobile-only refinements. Keep touch targets generous and avoid hover-only
-// interactions or clipping that could interfere with avatar cosmetics.
+// Mobile-only refinements. Touch users must get the complete interaction model
+// without hover and without geometry changes that interfere with the composer
+// or avatar/nameplate cosmetics.
 
 .wrap {
   width: min(calc(100% - 1rem), var(--er-content-max));
@@ -20,11 +21,20 @@
 
 .d-header .title {
   min-width: 0;
+  padding-inline-end: 0.25rem;
+}
+
+.d-header .d-header-icons {
+  gap: 0.12rem;
 }
 
 .d-header .d-header-icons .icon {
   min-width: 2.5rem;
   min-height: 2.5rem;
+}
+
+.sidebar-wrapper .sidebar-sections {
+  box-shadow: none;
 }
 
 .navigation-container,
@@ -52,38 +62,128 @@
 }
 
 @if $topic-cards == true or $topic-cards == "true" {
-  .latest-topic-list-item {
-    margin-block: 0.45rem;
-    padding: 0.78rem 0.82rem;
-    border-radius: max(10px, calc(var(--er-radius-card) * 0.82));
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 6%, transparent);
-  }
-
   .topic-list:not(.--d-topic-cards) {
-    border-spacing: 0 0.45rem;
+    border-spacing: 0 0.5rem;
 
-    .topic-list-body .topic-list-item .topic-list-data {
-      padding-block: 0.72rem;
+    .topic-list-body .topic-list-item > .topic-list-data {
+      padding: 0.78rem 0.82rem;
+      border: 1px solid var(--er-border);
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+      box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 6%, transparent);
+    }
+
+    .topic-list-body .topic-list-item.unseen-topic > .topic-list-data,
+    .topic-list-body .topic-list-item.unread-posts > .topic-list-data {
+      border-inline-start: 3px solid var(--er-accent);
     }
   }
 }
 
-.latest-topic-list-item .main-link .top-row .title,
-.latest-topic-list-item .main-link .top-row a.title,
-.topic-list td.main-link .title {
-  line-height: 1.35;
+.topic-list .topic-list-item {
+  .pull-left .avatar {
+    outline: 2px solid var(--er-avatar-ring);
+    box-shadow: 0 0 0 1px var(--er-border-soft);
+  }
+
+  .topic-item-metadata.right,
+  .main-link {
+    min-width: 0;
+  }
+
+  .main-link .title,
+  .main-link a.title {
+    font-size: var(--font-0);
+    line-height: 1.36;
+  }
+
+  .main-link .topic-excerpt {
+    margin-top: 0.45rem;
+    padding: 0.55rem 0.62rem;
+  }
+
+  .topic-item-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem;
+    margin-top: 0.38rem;
+  }
+
+  .topic-item-stats__category-tags {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .num.activity.last {
+    flex: 0 0 auto;
+  }
 }
 
-.latest-topic-list-item .main-link .bottom-row,
-.topic-list td.main-link .link-bottom-line {
-  margin-top: 0.3rem;
+.latest-topic-list-item {
+  margin-block: 0.45rem;
+  padding: 0.78rem 0.82rem;
+  border-radius: clamp(10px, var(--er-radius-card), 16px);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 6%, transparent);
+  gap: 0.6rem;
+
+  .topic-poster .avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .main-link {
+    min-width: 0;
+
+    .top-row {
+      font-size: var(--font-0);
+      line-height: 1.36;
+    }
+
+    .bottom-row {
+      margin-top: 0.3rem;
+    }
+  }
+
+  .topic-stats {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+}
+
+.category-boxes,
+.category-boxes-with-topics {
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+
+  .category-box {
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+    box-shadow: 0 3px 14px color-mix(in srgb, var(--primary) 5%, transparent);
+  }
+
+  .category-box-inner {
+    padding: 0.9rem;
+  }
+}
+
+.category-list {
+  border-spacing: 0 0.45rem;
+
+  .category-description {
+    line-height: 1.5;
+  }
 }
 
 .topic-post {
   margin-bottom: 0.75rem;
 
   .topic-body {
-    border-radius: max(10px, calc(var(--er-radius-card) * 0.82));
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
     box-shadow: 0 3px 14px color-mix(in srgb, var(--primary) 5%, transparent);
   }
 }
@@ -112,7 +212,7 @@
 .modal-inner-container,
 .d-modal__container,
 .composer-popup {
-  border-radius: max(10px, calc(var(--er-radius-card) * 0.82));
+  border-radius: clamp(10px, var(--er-radius-card), 16px);
 }
 
 .d-modal__container,
@@ -132,9 +232,9 @@ textarea:not(.d-editor-input) {
   min-height: 2.5rem;
 }
 
-// Mobile does not use hover lift; touch feedback comes from native active/focus
-// states and the shared color transitions.
+// Mobile/touch gets persistent state styling instead of hover lift.
 .latest-topic-list-item,
+.category-box,
 .btn {
   transform: none;
 }
