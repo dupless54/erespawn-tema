@@ -1,0 +1,647 @@
+@use "lib/viewport";
+
+// Auxiliary product surfaces: auth, preferences, directory, badges and modal
+// chrome. Keep native Discourse layout mechanics and accessibility semantics.
+
+// ---------------------------------------------------------------------------
+// Login / signup / invite / password flows
+// ---------------------------------------------------------------------------
+body.login-page,
+body.signup-page,
+body.invite-page,
+body.password-reset-page,
+body.activate-account-page {
+  background:
+    radial-gradient(
+      circle at 15% 12%,
+      color-mix(in srgb, var(--tertiary) 9%, transparent),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 88% 70%,
+      color-mix(in srgb, var(--quaternary) 6%, transparent),
+      transparent 26rem
+    ),
+    var(--er-page);
+
+  .d-header {
+    background: transparent;
+  }
+}
+
+.login-fullpage,
+.signup-fullpage,
+.invites-show,
+.password-reset-page {
+  .signup-body,
+  .login-body {
+    position: relative;
+    margin-block: 1.5rem;
+    background: color-mix(in srgb, var(--er-surface) 96%, transparent);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-md);
+    overflow: clip;
+  }
+
+  .login-left-side,
+  .login-right-side {
+    background: transparent;
+  }
+
+  .login-right-side::before {
+    background: var(--er-border-soft);
+  }
+
+  .login-welcome-header {
+    h1,
+    h2 {
+      color: var(--er-text);
+      letter-spacing: -0.025em;
+    }
+
+    p {
+      color: var(--er-text-muted);
+      line-height: 1.55;
+    }
+  }
+
+  .login-form,
+  #login-form,
+  .invite-form {
+    gap: 0.15rem;
+  }
+
+  .input-group {
+    input,
+    textarea,
+    .select-kit-header,
+    .multi-select-header {
+      box-sizing: border-box;
+      background: var(--er-surface-subtle);
+      border-color: var(--er-border);
+      border-radius: var(--er-radius-control);
+      color: var(--er-text);
+      transition:
+        background-color var(--er-motion-fast) ease,
+        border-color var(--er-motion-fast) ease,
+        box-shadow var(--er-motion-fast) ease;
+
+      &:hover:not(:disabled) {
+        border-color: var(--er-border-strong);
+      }
+    }
+
+    input:not(.filter-input):focus,
+    textarea:focus,
+    .select-kit-header:focus-visible {
+      background: var(--er-surface);
+      border-color: var(--er-accent);
+      box-shadow: var(--er-focus-ring);
+      outline: 0;
+    }
+
+    span.more-info,
+    label.more-info,
+    .instructions {
+      color: var(--er-text-muted);
+    }
+
+    label.alt-placeholder,
+    .user-field label.control-label {
+      color: var(--er-text-muted);
+    }
+
+    input:focus + label.alt-placeholder,
+    input.value-entered + label.alt-placeholder,
+    .user-field.text:focus-within label.control-label,
+    .user-field.value-entered label.control-label {
+      background: var(--er-surface);
+      color: var(--er-accent);
+    }
+  }
+
+  #login-buttons {
+    .btn-social {
+      min-height: 2.8rem;
+      background: var(--er-surface-subtle);
+      border-color: var(--er-border);
+      border-radius: var(--er-radius-control);
+      color: var(--er-text-soft);
+      box-shadow: none;
+      transition:
+        background-color var(--er-motion-fast) ease,
+        border-color var(--er-motion-fast) ease,
+        transform var(--er-motion-fast) var(--er-ease);
+
+      &:hover,
+      &:focus-visible {
+        background: var(--er-surface-hover);
+        border-color: var(--er-border-strong);
+      }
+    }
+  }
+
+  .login-page-cta,
+  .signup-page-cta {
+    &__existing-account,
+    &__no-account-yet,
+    &__disclaimer {
+      color: var(--er-text-muted);
+    }
+
+    &__existing-account::before,
+    &__no-account-yet::before {
+      background: var(--er-border-soft);
+    }
+  }
+
+  .login-or-separator {
+    border-color: var(--er-border-soft);
+
+    span {
+      background: var(--er-surface);
+      color: var(--er-text-muted);
+    }
+  }
+
+  .alert {
+    border-radius: var(--er-radius-control);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Preferences / form pages
+// ---------------------------------------------------------------------------
+.user-preferences-page {
+  .user-navigation-secondary {
+    margin-bottom: 0.75rem;
+    padding: 0.3rem;
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+
+    .horizontal-overflow-nav {
+      border: 0;
+    }
+
+    .nav-pills > li > a {
+      min-height: 2.6rem;
+      gap: 0.45rem;
+      color: var(--er-text-muted);
+
+      .d-icon {
+        color: currentcolor;
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: var(--er-text-soft);
+      }
+    }
+
+    .nav-pills > li.active > a,
+    .nav-pills > li > a.active,
+    .nav-pills > li > a[aria-current="page"] {
+      color: var(--er-accent);
+      background: var(--er-accent-soft);
+      border-color: var(--er-accent-low);
+    }
+  }
+
+  .user-preferences {
+    padding: 1rem 1.1rem;
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+  }
+}
+
+.user-preferences,
+.form-vertical,
+.form-horizontal {
+  .control-group {
+    padding-block: 0.8rem;
+
+    + .control-group {
+      border-top: 1px solid var(--er-border-soft);
+    }
+  }
+
+  .control-label,
+  label:not(.checkbox-label) {
+    color: var(--er-text);
+    font-weight: 650;
+  }
+
+  .instructions,
+  .description,
+  .pref-description,
+  .tip {
+    color: var(--er-text-muted);
+    line-height: 1.5;
+  }
+
+  input:not([type="checkbox"], [type="radio"], .d-editor-input),
+  textarea:not(.d-editor-input),
+  .select-kit-header,
+  .multi-select-header {
+    background: var(--er-surface-subtle);
+    border-color: var(--er-border);
+    color: var(--er-text);
+
+    &:hover:not(:disabled) {
+      border-color: var(--er-border-strong);
+    }
+
+    &:focus,
+    &:focus-visible {
+      border-color: var(--er-accent);
+      box-shadow: var(--er-focus-ring);
+      outline: 0;
+    }
+  }
+
+  fieldset {
+    padding: 0.8rem;
+    border: 1px solid var(--er-border-soft);
+    border-radius: var(--er-radius-control);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// User directory / responsive table
+// ---------------------------------------------------------------------------
+.directory {
+  background: transparent;
+
+  .directory-controls {
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.7rem;
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+
+    .total-rows {
+      color: var(--er-text-muted);
+    }
+
+    input,
+    .select-kit-header {
+      background: var(--er-surface-subtle);
+      border-color: var(--er-border);
+    }
+  }
+
+  .directory-last-updated {
+    color: var(--er-text-muted);
+  }
+}
+
+.directory-table {
+  gap: 0.45rem 0;
+
+  &__header {
+    margin-bottom: 0.2rem;
+    background: var(--er-surface-subtle);
+    border: 1px solid var(--er-border-soft);
+    border-radius: var(--er-radius-control);
+  }
+
+  &__column-header {
+    color: var(--er-text-muted);
+    border-bottom: 0;
+    font-size: var(--font-down-1);
+    font-weight: 650;
+  }
+
+  &__row {
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+    transition:
+      background-color var(--er-motion-fast) ease,
+      border-color var(--er-motion-fast) ease,
+      box-shadow var(--er-motion-medium) var(--er-ease);
+
+    &:hover,
+    &:focus-within {
+      .discourse-no-touch & {
+        background: var(--er-surface-hover);
+        border-color: var(--er-border-strong);
+        box-shadow: var(--er-shadow-hover);
+      }
+    }
+
+    &.me {
+      background: var(--er-accent-soft);
+      border-color: var(--er-accent-low);
+    }
+  }
+
+  &__cell,
+  &__cell--empty,
+  &__cell--user-field {
+    border-bottom: 0;
+  }
+
+  &__value {
+    color: var(--er-text-soft);
+    font-variant-numeric: tabular-nums;
+
+    &--user-field {
+      color: var(--er-text-muted);
+    }
+  }
+
+  &__label {
+    color: var(--er-text-muted);
+  }
+
+  .user-info {
+    .avatar {
+      outline: 2px solid var(--er-avatar-ring);
+      box-shadow: 0 0 0 1px var(--er-border-soft);
+    }
+
+    .username,
+    .name {
+      color: var(--er-text);
+    }
+  }
+}
+
+@container (max-width: 47em) {
+  .directory-table {
+    gap: 0.6rem;
+
+    &__row {
+      padding: 0.7rem;
+      border: 1px solid var(--er-border);
+    }
+
+    &__row:first-child {
+      border-top: 1px solid var(--er-border);
+    }
+
+    &__label::after {
+      color: var(--er-border-soft);
+    }
+
+    .me {
+      background: var(--er-accent-soft);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Badges
+// ---------------------------------------------------------------------------
+.container.badges,
+.show-badge {
+  background: transparent;
+}
+
+.badge-group-list,
+.badges-granted {
+  gap: 0.85rem;
+}
+
+.badge-card {
+  background: var(--er-surface);
+  border-color: var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+  transition:
+    background-color var(--er-motion-fast) ease,
+    border-color var(--er-motion-fast) ease,
+    box-shadow var(--er-motion-medium) var(--er-ease),
+    transform var(--er-motion-medium) var(--er-ease);
+
+  &:hover,
+  &:focus-within {
+    .discourse-no-touch & {
+      background: var(--er-surface-hover);
+      border-color: var(--er-border-strong);
+      box-shadow: var(--er-shadow-hover);
+      transform: translateY(-2px);
+    }
+  }
+
+  .badge-contents {
+    padding: 1rem;
+
+    .badge-info {
+      color: var(--er-text-soft);
+
+      h3 {
+        color: var(--er-text);
+        letter-spacing: -0.012em;
+      }
+    }
+
+    .badge-summary,
+    .badge-granted,
+    .grant-count,
+    .grant-text {
+      color: var(--er-text-muted);
+    }
+  }
+
+  .favorite-btn {
+    border-start-start-radius: var(--er-radius-control);
+  }
+}
+
+.user-badge {
+  background: var(--er-surface-subtle);
+  border-color: var(--er-border);
+  border-radius: var(--d-border-radius-pill);
+  color: var(--er-text-soft);
+}
+
+.show-badge-details .badge-set-title {
+  background: var(--er-surface);
+  border-color: var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+}
+
+// ---------------------------------------------------------------------------
+// Modal chrome - preserve core sizing/positioning and mobile bottom-sheet
+// geometry. These rules are visual only.
+// ---------------------------------------------------------------------------
+.d-modal {
+  &__container {
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    box-shadow: var(--er-shadow-md);
+  }
+
+  &__header {
+    background: color-mix(in srgb, var(--er-surface-subtle) 85%, transparent);
+    border-color: var(--er-border-soft);
+
+    .modal-close {
+      border-radius: var(--er-radius-control);
+
+      &:hover,
+      &:focus-visible {
+        background: var(--er-surface-hover);
+      }
+    }
+  }
+
+  &__title-text {
+    color: var(--er-text);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  &__subtitle-text {
+    color: var(--er-text-muted);
+  }
+
+  &__body {
+    color: var(--er-text-soft);
+  }
+
+  &__footer {
+    background: color-mix(in srgb, var(--er-surface-subtle) 78%, transparent);
+    border-color: var(--er-border-soft);
+  }
+}
+
+// Modal/form dropdown surfaces. Do not alter dropdown placement or max-height.
+.d-modal,
+.user-preferences,
+.login-fullpage,
+.signup-fullpage,
+.invites-show,
+.password-reset-page {
+  .select-kit-body,
+  .fk-d-menu__inner-content:not([data-identifier="usercard"] *) {
+    border-color: var(--er-border);
+    background: var(--er-surface);
+  }
+
+  .select-kit-row,
+  .select-kit-collection li {
+    border-radius: var(--er-radius-small);
+
+    &:hover,
+    &:focus,
+    &.is-highlighted {
+      background: var(--er-surface-hover);
+    }
+
+    &.is-selected {
+      background: var(--er-accent-soft);
+      color: var(--er-text);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Responsive refinement
+// ---------------------------------------------------------------------------
+@include viewport.until(md) {
+  .login-fullpage,
+  .signup-fullpage,
+  .invites-show,
+  .password-reset-page {
+    .signup-body,
+    .login-body {
+      margin-block: 0.75rem;
+      box-shadow: var(--er-shadow-sm);
+    }
+
+    .login-left-side,
+    .login-right-side {
+      padding-inline: 1rem;
+    }
+  }
+
+  .user-preferences-page {
+    .user-navigation-secondary {
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}
+
+@include viewport.until(sm) {
+  .login-fullpage,
+  .signup-fullpage,
+  .invites-show,
+  .password-reset-page {
+    .signup-body,
+    .login-body {
+      margin-inline: 0.25rem;
+      width: calc(100% - 0.5rem);
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+    }
+
+    .login-right-side::before {
+      background: var(--er-border-soft);
+    }
+
+    #login-buttons .btn-social {
+      min-height: 2.65rem;
+      transform: none;
+    }
+  }
+
+  .user-preferences-page {
+    .user-navigation-secondary,
+    .user-preferences {
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+    }
+
+    .user-preferences {
+      padding: 0.75rem;
+    }
+  }
+
+  .directory {
+    margin-bottom: 2rem;
+
+    .directory-controls {
+      align-items: stretch;
+      padding: 0.65rem;
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+    }
+  }
+
+  .directory-table__row,
+  .badge-card {
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+    transform: none;
+  }
+
+  .badge-card .badge-contents {
+    gap: 0.75rem;
+    padding: 0.85rem;
+  }
+
+  .d-modal__container {
+    // Core owns mobile bottom-sheet width, height and fixed positioning.
+    border-inline: 0;
+    border-bottom: 0;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+    border-start-start-radius: clamp(12px, var(--er-radius-card), 18px);
+    border-start-end-radius: clamp(12px, var(--er-radius-card), 18px);
+  }
+}

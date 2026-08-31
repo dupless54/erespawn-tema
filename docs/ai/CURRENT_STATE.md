@@ -3,39 +3,39 @@
 Last updated: 2026-08-31
 
 ## Repository state
-- Premium foundation, discovery/topic-list v2 and topic-reading/composer v3 are merged to `main`.
+- Premium foundation, discovery/topic-list v2, topic-reading/composer v3 and profile/search/user-menu v4 are merged to `main`.
 - Canonical minimum-token agent rules live in root `AGENTS.md`.
-- Active development branch: `feat/premium-profile-search-v4`.
+- Active development branch: `feat/premium-auxiliary-surfaces-v5`.
 - Target: current/latest Discourse theme APIs and official theme skeleton.
 
-## Active premium identity/discovery phase
-1. Upgrade native user/group cards without replacing `user-card-contents` or changing the current `fk-d-menu[data-identifier="usercard"]` integration.
-2. Preserve core `overflow: visible` behavior around user-card content so avatar decorations, flairs and plugin cosmetics remain composable.
-3. Upgrade full user/group profile pages, navigation, stats and content surfaces while preserving responsive profile layout and controls.
-4. Upgrade the Glimmer search menu and full search page using current native classes and result structure.
-5. Upgrade the revamped user/notification menu and hamburger surfaces while retaining tab, notification, unread and focus semantics.
-6. Keep Light/Dark parity and derive runtime color from Discourse CSS variables through the existing eRespawn semantic token layer.
-7. Keep hover progressive only; touch/mobile must expose complete persistent state and controls.
-8. Keep device-only geometry in `desktop/desktop.scss` and `mobile/mobile.scss`; shared V4 rules live in `stylesheets/profile-search.scss`.
+## Active premium auxiliary phase
+1. Upgrade current full-page login, signup, invite, password-reset and activation flows without replacing auth templates or altering authentication behavior.
+2. Upgrade user preferences navigation/forms while retaining native horizontal-overflow navigation, form semantics and plugin outlets.
+3. Upgrade the responsive users directory while preserving current container-query table/card transformation and dropdown containment mechanics.
+4. Upgrade badge catalog/detail cards without replacing `D-BadgeCard` links, favorite controls, granted-state semantics or badge type colors.
+5. Upgrade current DModal visual chrome without changing desktop width constraints or mobile bottom-sheet fixed/full-width/keyboard/safe-area geometry.
+6. Remove the legacy mobile theme override that incorrectly narrows current `.d-modal__container` to `calc(100vw - 1rem)`.
+7. Keep Light/Dark parity and derive runtime colors from current Discourse CSS variables via eRespawn semantic tokens.
+8. Load shared V5 rules from `stylesheets/auxiliary-surfaces.scss`; keep device entrypoints limited to device-specific geometry.
 
 ## Design direction
-- User cards should feel like premium identity cards rather than generic popovers while still supporting arbitrary plugin metadata.
-- Full profiles should read as product account/community profiles with a strong hero, clean navigation and modular stat/content surfaces.
-- Search should behave like a lightweight command palette in the header and a curated result feed on the full page.
-- Notifications and user-menu tabs should use the same surface, state and density language as sidebar/topic navigation.
-- No cosmetic layer should be clipped, masked, flattened or replaced for visual convenience.
+- Auth pages should feel like a focused premium onboarding surface rather than a raw two-column form.
+- Preferences should read as an account/settings product with clear section boundaries and predictable focus states.
+- Directory rows should share the topic/profile card language while retaining compact numeric scanning.
+- Badge cards should feel collectible and polished without obscuring native badge status/type semantics.
+- Desktop modals should feel elevated and composed; mobile modals remain native edge-to-edge bottom sheets with premium top corners only.
 
 ## Compatibility invariants
-- Avatar decorations/nameplates/cosmetic pseudo-elements must remain visible and correctly layered.
-- Do not set overflow clipping on `fk-d-menu[data-identifier="usercard"]`, `.fk-d-menu__inner-content`, `.user-card-avatar`, `.user-profile-avatar` or plugin-owned cosmetic wrappers.
-- Optional plugin user-card metadata/outlets may be enhanced but never assumed to exist.
-- Avoid user-card/profile transforms and z-index resets that can create new stacking contexts around cosmetic layers.
-- Search result links, user-menu tabs, unread notifications and keyboard focus must retain native semantics.
-- Do not replace current user/search/menu Glimmer templates when stable core selectors are sufficient.
-- Mobile slide-in menus keep native full-height geometry; premium radius/elevation is applied only where it does not break edge-to-edge interaction.
+- Authentication routes, form ids/names, password helpers, social-login buttons and user-field behavior remain native.
+- Directory `.directory-table-container` transform and container-query mechanics remain untouched; do not add overflow clipping that would break fixed dropdowns.
+- Preference plugin outlets and route navigation stay native; do not replace the Glimmer template.
+- Badge link/favorite overlays and gold/silver/bronze status colors remain native.
+- DModal owns position, width, max-height, keyboard height, safe-area padding and animations; theme overrides are visual only.
+- Mobile current `.d-modal__container` must not be globally narrowed or centered with side margins.
+- Composer/editor geometry and avatar/nameplate cosmetic boundaries from earlier decisions remain unchanged.
 
 ## Next validation gate
-- Commit V4 as a bounded feature commit and open a PR from `feat/premium-profile-search-v4` to `main`.
+- Commit V5 as a bounded feature commit and add focused system smoke coverage for auth, directory, preferences and badges.
+- Open a PR from `feat/premium-auxiliary-surfaces-v5` to `main`.
 - Required official Discourse Theme GitHub Action must be GREEN on the exact PR head.
-- Verify Ember Build and shared Theme System Tests after the new shared stylesheet import.
-- Review changed paths against task scope before merge.
+- Verify Ember Build and all Theme System Tests, then review exact changed paths before merge.
