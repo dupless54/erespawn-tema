@@ -74,6 +74,14 @@ jobs:
         run: |
           "$TOOL_DIR/node_modules/.bin/prettier" \
             '{javascripts,desktop,mobile,common,scss,stylesheets}/**/*.scss' \
-            --check \
+            --write \
             --no-error-on-unmatched-pattern \
             --config "$GITHUB_WORKSPACE/.prettierrc.cjs"
+
+          if ! git diff --quiet -- .; then
+            echo "Prettier formatting changes are required:"
+            git diff --check
+            git diff -- .
+            echo "::error::Run the pinned Discourse Prettier configuration and commit the resulting formatting changes."
+            exit 1
+          fi
