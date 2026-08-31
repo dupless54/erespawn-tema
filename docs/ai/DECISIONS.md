@@ -13,7 +13,13 @@ Style native table topic lists and the current Glimmer `latest-topic-list-item` 
 Avatar decorations, nameplates, flairs, badges and user-card/profile cosmetics are integration boundaries. The theme may style surrounding surfaces but must not clip, mask, flatten or replace plugin-owned decoration layers without a targeted verified integration.
 
 ## D-005 — Mobile-first current breakpoints
-Use current Discourse `lib/viewport` helpers and modern breakpoint model rather than legacy fixed-width assumptions.
+Use current Discourse responsive guidance and viewport helpers where responsive behavior belongs in the shared layer; keep `desktop/desktop.scss` and `mobile/mobile.scss` limited to device-specific refinement.
 
 ## D-006 — Exact-head CI is the merge gate
 Required official Discourse Theme CI on the latest exact PR head is authoritative. A new commit invalidates old CI evidence.
+
+## D-007 — Palette metadata is the only static color source
+Light/dark HEX values belong in `about.json` color schemes. Runtime SCSS must consume native Discourse CSS variables or eRespawn semantic aliases derived from those variables; do not duplicate palette HEX values in stylesheets.
+
+## D-008 — One stylesheet architecture
+The canonical runtime stylesheet structure is `common/color_definitions.scss`, `common/common.scss`, `desktop/desktop.scss`, and `mobile/mobile.scss`. Superseded parallel SCSS module trees should be removed rather than left as dead styling paths.
