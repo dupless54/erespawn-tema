@@ -7,6 +7,7 @@
 // ---------------------------------------------------------------------------
 // User activity stream
 // ---------------------------------------------------------------------------
+.new-user-content-wrapper,
 .user-content-wrapper {
   .user-stream {
     display: grid;
@@ -125,6 +126,7 @@
 // ---------------------------------------------------------------------------
 // Full notifications page
 // ---------------------------------------------------------------------------
+.new-user-content-wrapper,
 .user-content-wrapper {
   .user-notifications-filter {
     display: flex;
@@ -516,6 +518,7 @@
 }
 
 @include viewport.until(sm) {
+  .new-user-content-wrapper,
   .user-content-wrapper {
     .user-stream {
       gap: 0.5rem;
