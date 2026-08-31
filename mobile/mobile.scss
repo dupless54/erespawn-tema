@@ -236,7 +236,7 @@
 .btn,
 .select-kit .select-kit-header,
 input:not(.d-editor-input),
-textarea:not(.d-editor-input) {
+textarea:not(.d-editor-input):not(.chat-composer__input) {
   min-height: 2.5rem;
 }
 
