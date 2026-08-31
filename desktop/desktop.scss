@@ -5,6 +5,7 @@
 @use "activity-static";
 @use "moderation-workflows";
 @use "bulk-topic-management";
+@use "native-chat";
 
 // Desktop-only refinements. Shared color/component behavior stays in
 // common/common.scss so light/dark mode and tablet behavior remain coherent.
