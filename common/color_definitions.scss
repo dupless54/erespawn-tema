@@ -9,7 +9,11 @@
   --er-surface-subtle: var(--primary-very-low);
   --er-surface-muted: var(--primary-low);
   --er-surface-hover: color-mix(in srgb, var(--tertiary) 7%, var(--secondary));
-  --er-surface-active: color-mix(in srgb, var(--tertiary) 11%, var(--secondary));
+  --er-surface-active: color-mix(
+    in srgb,
+    var(--tertiary) 11%,
+    var(--secondary)
+  );
   --er-text: var(--primary);
   --er-text-muted: var(--primary-medium);
   --er-text-soft: var(--primary-high);
@@ -26,12 +30,15 @@
   --er-love: var(--love);
   --er-stat-surface: color-mix(in srgb, var(--primary) 5%, var(--secondary));
   --er-avatar-ring: var(--secondary);
-  --er-shadow-sm: 0 1px 2px color-mix(in srgb, var(--primary) 8%, transparent),
+  --er-shadow-sm:
+    0 1px 2px color-mix(in srgb, var(--primary) 8%, transparent),
     0 8px 24px color-mix(in srgb, var(--primary) 6%, transparent);
-  --er-shadow-md: 0 16px 42px color-mix(in srgb, var(--primary) 12%, transparent);
+  --er-shadow-md: 0 16px 42px
+    color-mix(in srgb, var(--primary) 12%, transparent);
   --er-shadow-hover: 0 18px 48px
     color-mix(in srgb, var(--primary) 15%, transparent);
-  --er-focus-ring: 0 0 0 3px color-mix(in srgb, var(--tertiary) 24%, transparent);
+  --er-focus-ring: 0 0 0 3px
+    color-mix(in srgb, var(--tertiary) 24%, transparent);
   --er-motion-fast: 140ms;
   --er-motion-medium: 220ms;
   --er-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
