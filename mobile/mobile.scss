@@ -1,6 +1,7 @@
 @use "topic-reading";
 @use "profile-search";
 @use "auxiliary-surfaces";
+@use "community-utilities";
 
 // Mobile-only refinements. Touch users must get the complete interaction model
 // without hover and without geometry changes that interfere with the composer
