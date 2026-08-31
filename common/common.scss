@@ -235,8 +235,13 @@ body {
 .category-list .badge-category__wrapper {
   --er-category-color: var(--category-badge-color, var(--tertiary));
   padding: 0.18rem 0.48rem;
-  background: color-mix(in srgb, var(--er-category-color) 11%, var(--secondary));
-  border: 1px solid color-mix(in srgb, var(--er-category-color) 18%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--er-category-color) 11%,
+    var(--secondary)
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--er-category-color) 18%, transparent);
 
   .badge-category__name {
     color: var(--er-text-soft);
@@ -471,7 +476,10 @@ button:focus-visible,
 
       &:hover .topic-list-data {
         .discourse-no-touch & {
-          box-shadow: 0 12px 32px color-mix(in srgb, var(--primary) 8%, transparent);
+          box-shadow: 0
+            12px
+            32px
+            color-mix(in srgb, var(--primary) 8%, transparent);
         }
       }
 
