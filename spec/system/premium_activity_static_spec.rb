@@ -4,15 +4,19 @@ RSpec.describe "Premium activity and static surfaces" do
   before_all { UserActionManager.enable }
 
   fab!(:current_user, :admin)
-  fab!(:activity_topic) { Fabricate(:topic, user: current_user) }
-  fab!(:activity_posts) { Fabricate.times(2, :post, topic: activity_topic, user: current_user) }
+  fab!(:activity_topic) do
+    Fabricate(:topic, user: current_user).tap do |topic|
+      Fabricate
+        .times(2, :post, topic:, user: current_user)
+        .each { |post| UserActionManager.post_created(post) }
+    end
+  end
   fab!(:notification) { Fabricate(:notification, user: current_user, read: false) }
   fab!(:guidelines_topic) { Fabricate(:topic_with_op) }
 
   before { upload_theme_or_component }
 
   it "keeps the native user activity stream usable" do
-    activity_posts.each { |post| UserActionManager.post_created(post) }
     sign_in(current_user)
     PageObjects::Pages::UserActivityStream.new.visit_replies(current_user)
 
