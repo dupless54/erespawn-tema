@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.1.0 — 2026-09-01
+
+Premium native Discourse Chat pass built on the merged 1.0.0 bulk-topic management release.
+
+### Chat discovery and navigation
+- Added premium presentation for full-page channel lists, channel dividers, current `.chat-channel-row` active/focused/unread states and the native Chat navbar.
+- Added restrained Light/Dark surfaces for channel cards, preview cards and empty states without replacing Chat routes or components.
+- Preserved native long-press, swipe, leave-channel, unread tracking and keyboard-focus behavior.
+
+### Messages, reactions and composer
+- Added premium message-state treatment for active, bookmarked, highlighted, deleted and errored messages while retaining Chat-owned interaction state.
+- Refined message typography, quotes, code, reactions, action controls and thread/reply indicators using semantic eRespawn tokens.
+- Added premium Chat composer surface/focus treatment while leaving textarea growth, uploads, send shortcuts, safe-area padding and composer mechanics core-owned.
+- Added presentation-only drawer and side-panel surfaces without changing Chat sizing, scrolling or z-index mechanics.
+
+### Compatibility and quality
+- Introduced no theme JavaScript, Chat route replacement or template override.
+- Kept avatar/nameplate/flair/cosmetic-owned wrapper geometry untouched.
+- Added focused current-Discourse system smoke coverage that visits a native Chat channel and sends a real message through the native composer.
+- Merge remains gated by exact-head static Stylelint/Prettier and official Discourse Theme CI.
+
 ## 1.0.0 — 2026-09-01
 
 Premium bulk-topic management pass built on the merged 0.9.0 moderation release.
