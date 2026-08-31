@@ -1,0 +1,140 @@
+// Mobile-only refinements. Keep touch targets generous and avoid hover-only
+// interactions or clipping that could interfere with avatar cosmetics.
+
+.wrap {
+  width: min(calc(100% - 1rem), var(--er-content-max));
+}
+
+#main-outlet {
+  padding-top: 0.7rem;
+  padding-bottom: 1.5rem;
+}
+
+.d-header-wrap {
+  padding-block: 0.2rem;
+}
+
+.d-header .wrap {
+  min-height: 3.25rem;
+}
+
+.d-header .title {
+  min-width: 0;
+}
+
+.d-header .d-header-icons .icon {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+
+.navigation-container,
+.category-breadcrumb,
+.nav-pills {
+  gap: 0.35rem;
+}
+
+.nav-pills {
+  max-width: 100%;
+  padding-bottom: 0.25rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  > li > a,
+  > li > button {
+    min-height: 2.5rem;
+    white-space: nowrap;
+  }
+}
+
+@if $topic-cards == true or $topic-cards == "true" {
+  .latest-topic-list-item {
+    margin-block: 0.45rem;
+    padding: 0.78rem 0.82rem;
+    border-radius: max(10px, calc(var(--er-radius-card) * 0.82));
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 6%, transparent);
+  }
+
+  .topic-list:not(.--d-topic-cards) {
+    border-spacing: 0 0.45rem;
+
+    .topic-list-body .topic-list-item .topic-list-data {
+      padding-block: 0.72rem;
+    }
+  }
+}
+
+.latest-topic-list-item .main-link .top-row .title,
+.latest-topic-list-item .main-link .top-row a.title,
+.topic-list td.main-link .title {
+  line-height: 1.35;
+}
+
+.latest-topic-list-item .main-link .bottom-row,
+.topic-list td.main-link .link-bottom-line {
+  margin-top: 0.3rem;
+}
+
+.topic-post {
+  margin-bottom: 0.75rem;
+
+  .topic-body {
+    border-radius: max(10px, calc(var(--er-radius-card) * 0.82));
+    box-shadow: 0 3px 14px color-mix(in srgb, var(--primary) 5%, transparent);
+  }
+}
+
+.cooked {
+  line-height: 1.65;
+
+  blockquote,
+  pre {
+    margin-inline: 0;
+    padding: 0.78rem;
+    border-radius: var(--er-radius-control);
+  }
+
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+}
+
+.user-card,
+.group-card,
+.menu-panel,
+.select-kit-body,
+.modal-inner-container,
+.d-modal__container,
+.composer-popup {
+  border-radius: max(10px, calc(var(--er-radius-card) * 0.82));
+}
+
+.d-modal__container,
+.modal-inner-container {
+  max-width: calc(100vw - 1rem);
+  margin-inline: auto;
+}
+
+#reply-control .reply-area {
+  padding-inline: 0.5rem;
+}
+
+.btn,
+.select-kit .select-kit-header,
+input:not(.d-editor-input),
+textarea:not(.d-editor-input) {
+  min-height: 2.5rem;
+}
+
+// Mobile does not use hover lift; touch feedback comes from native active/focus
+// states and the shared color transitions.
+.latest-topic-list-item,
+.btn {
+  transform: none;
+}

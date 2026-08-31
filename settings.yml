@@ -1,0 +1,31 @@
+topic_cards:
+  type: bool
+  default: true
+  description: "Render topic lists with premium card surfaces while preserving native Discourse markup."
+
+card_radius:
+  type: integer
+  default: 16
+  min: 8
+  max: 28
+  description: "Corner radius used by cards, menus, composer and modal surfaces."
+
+content_max_width:
+  type: integer
+  default: 1240
+  min: 960
+  max: 1680
+  description: "Maximum width of the main Discourse content area in pixels."
+
+topic_density:
+  type: enum
+  default: comfortable
+  choices:
+    - comfortable
+    - compact
+  description: "Vertical density of topic-list rows and cards."
+
+header_blur:
+  type: bool
+  default: true
+  description: "Enable the lightweight translucent blur treatment on the sticky header."

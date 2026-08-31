@@ -1,0 +1,73 @@
+// Desktop-only refinements. The shared layer remains the source of truth for
+// color, spacing and component behavior so light/dark mode stays automatic.
+
+.d-header .wrap {
+  min-height: 3.75rem;
+}
+
+.d-header .contents {
+  gap: 0.75rem;
+}
+
+#main-outlet {
+  padding-bottom: 3rem;
+}
+
+.navigation-container,
+.category-breadcrumb {
+  margin-bottom: 1rem;
+}
+
+.sidebar-wrapper {
+  padding-inline-end: 0.35rem;
+}
+
+.topic-list {
+  .posts,
+  .views,
+  .activity {
+    min-width: 5.25rem;
+  }
+
+  .activity {
+    padding-inline-end: 1rem;
+  }
+}
+
+@if $topic-cards == true or $topic-cards == "true" {
+  .topic-list:not(.--d-topic-cards) .topic-list-body .topic-list-item {
+    .topic-list-data:first-child {
+      box-shadow: -1px 0 0 color-mix(in srgb, var(--primary) 2%, transparent);
+    }
+
+    &:hover .topic-list-data {
+      box-shadow: 0 10px 28px color-mix(in srgb, var(--primary) 7%, transparent);
+    }
+  }
+}
+
+.topic-post {
+  margin-bottom: 1rem;
+
+  .topic-body {
+    padding-inline: 1.25rem;
+  }
+}
+
+.topic-post .cooked {
+  max-width: 82ch;
+}
+
+.user-card,
+.group-card {
+  min-width: min(32rem, calc(100vw - 4rem));
+}
+
+#reply-control .reply-area {
+  padding-inline: 0.75rem;
+}
+
+.menu-panel,
+.select-kit-body {
+  border-radius: var(--er-radius-card);
+}
