@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.8.0 — 2026-09-01
+
+Premium activity, notification and public/static information pass built on the merged 0.7.0 community-utilities release.
+
+### User activity
+- Added premium card treatment for current `.user-stream` / `.user-stream-item` activity surfaces.
+- Refined titles, metadata, excerpts, moderator/deleted states and draft/action chrome while preserving native stream loading and navigation.
+- Kept avatar and cosmetic-owned wrapper geometry untouched; only the avatar image receives the existing eRespawn ring treatment.
+
+### Full notifications
+- Added premium framing for current `user-notifications-filter` and `user-notifications-list` structures.
+- Added clearer unread state, label/description hierarchy and responsive notification cards while preserving native filtering, infinite scrolling and plugin outlets.
+
+### Public and static pages
+- Added premium About hero, stats, staff lists, activity cards and responsive column treatment around current `AboutPage` markup.
+- Added readable premium surfaces for current FAQ, guidelines, terms and privacy pages generated through Discourse static body pages.
+- Added premium error/not-found surfaces without replacing exception routing or error actions.
+
+### Compatibility and quality
+- Added the shared `stylesheets/activity-static.scss` module to both desktop and mobile targets.
+- Introduced no theme JavaScript, route replacement or template override.
+- Preserved native activity/notification routes, plugin outlets, accessibility semantics and cosmetics boundaries.
+- Added focused current-Discourse system smoke coverage for user activity, full notifications, About and FAQ.
+- Merge remains gated by exact-head static Stylelint/Prettier and official Discourse Theme CI.
+
 ## 0.7.0 — 2026-08-31
 
 Premium community-utility pass built on the release-ready 0.6.0 foundation.

@@ -2,7 +2,7 @@
 
 eRespawn Premium is a full Discourse theme for current Discourse releases. It keeps native routing, templates, accessibility semantics, plugin outlets and interaction mechanics intact while applying a cohesive premium visual system across the forum.
 
-Current theme version: **0.7.0**.
+Current theme version: **0.8.0**.
 
 ## Highlights
 - Premium native topic lists and category discovery without replacing core topic-row markup.
@@ -10,6 +10,7 @@ Current theme version: **0.7.0**.
 - Premium profile, user-card, search, user-menu and notification surfaces.
 - Refined login, signup, invite, password-reset, preferences, directory, badges and modal chrome.
 - Premium bookmarks, private-message navigation, groups and tag discovery while retaining current Discourse-owned interactions and extension points.
+- Premium user activity streams, full notification pages, About, FAQ/guidelines, terms/privacy and error/not-found surfaces using native current Discourse markup.
 - Responsive desktop, tablet, mobile and small-screen treatment using current Discourse viewport conventions.
 - Light and dark palettes driven by Discourse CSS custom properties.
 - Accessibility-conscious focus states and reduced-motion support.
@@ -40,6 +41,7 @@ For an existing installation, use Discourse's normal theme update action to pull
 - Private-message routes, inbox selectors, navigation and topic-list behavior remain native Discourse behavior.
 - Group membership/actions and member directory container-query behavior remain core-owned.
 - Tag admin controls, tag links and plugin outlets remain core-owned.
+- Activity streams, full notifications and public/static information pages keep current Discourse routes, components and plugin outlets.
 - DModal owns modal positioning, width, keyboard/safe-area behavior and mobile bottom-sheet geometry.
 - Discourse owns composer resize/focus geometry and directory container-query behavior.
 - Hover effects are progressive enhancement; touch devices retain the complete interaction model without hover.
@@ -52,7 +54,7 @@ Every pull request is gated by:
 - a separate read-only Stylelint gate using the current official `@discourse/lint-configs` rules;
 - Prettier using the current official Discourse configuration.
 
-The repository also carries focused system smoke coverage for core features, topic discovery/reading, identity/search, auxiliary account surfaces and community utility routes such as bookmarks, private messages, groups and tags.
+The repository also carries focused system smoke coverage for core features, topic discovery/reading, identity/search, auxiliary account surfaces, community utility routes and activity/static routes such as user activity, full notifications, About and FAQ.
 
 ## Development
 Canonical AI/developer guidance lives in `AGENTS.md`. The `docs/ai/`, `.agents/skills/`, `.claude/` and `.codex/` files implement the project's minimum-token development workflow.
