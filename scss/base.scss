@@ -1,0 +1,87 @@
+html {
+  background: var(--secondary);
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at 12% -10%,
+      color-mix(in srgb, var(--tertiary) 7%, transparent),
+      transparent 34rem
+    ),
+    var(--secondary);
+}
+
+.wrap {
+  width: min(calc(100% - 2rem), var(--er-content-max));
+  max-width: var(--er-content-max);
+}
+
+.btn,
+.select-kit .select-kit-header,
+input,
+textarea,
+.d-editor-textarea-wrapper {
+  border-radius: var(--er-radius-sm);
+}
+
+.btn {
+  transition:
+    transform var(--er-motion-fast) var(--er-ease),
+    box-shadow var(--er-motion-fast) var(--er-ease),
+    background-color var(--er-motion-fast) ease,
+    border-color var(--er-motion-fast) ease;
+
+  &:hover {
+    .discourse-no-touch & {
+      transform: translateY(-1px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--tertiary);
+    outline-offset: 2px;
+    box-shadow: var(--er-shadow-focus);
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--tertiary);
+  outline-offset: 2px;
+}
+
+.user-card,
+.group-card,
+.menu-panel,
+.modal-inner-container,
+.d-modal__container {
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-card-radius);
+  box-shadow: var(--er-shadow-md);
+}
+
+// Cosmetics safety: enhance the surrounding surface without clipping or
+// replacing plugin/core avatar/name decoration layers.
+.avatar,
+.avatar-wrapper,
+.topic-avatar,
+.topic-poster,
+.post-avatar,
+.names,
+.username,
+.name {
+  isolation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+}
