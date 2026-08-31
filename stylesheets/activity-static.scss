@@ -39,7 +39,11 @@
 
       &.moderator-action {
         background: color-mix(in srgb, var(--highlight) 9%, var(--er-surface));
-        border-color: color-mix(in srgb, var(--highlight) 22%, var(--er-border));
+        border-color: color-mix(
+          in srgb,
+          var(--highlight) 22%,
+          var(--er-border)
+        );
       }
 
       &.deleted {
@@ -161,7 +165,8 @@
       &:focus-within {
         background: var(--er-surface-hover);
         border-color: var(--er-border-strong);
-        box-shadow: 0 7px 20px color-mix(in srgb, var(--primary) 7%, transparent);
+        box-shadow: 0 7px 20px
+          color-mix(in srgb, var(--primary) 7%, transparent);
       }
 
       &.unread {
@@ -400,7 +405,11 @@
     }
 
     a {
-      text-decoration-color: color-mix(in srgb, var(--er-accent) 35%, transparent);
+      text-decoration-color: color-mix(
+        in srgb,
+        var(--er-accent) 35%,
+        transparent
+      );
       text-underline-offset: 0.15em;
     }
 
