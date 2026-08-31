@@ -1,0 +1,26 @@
+card_radius:
+  default: 16
+  min: 8
+  max: 28
+
+content_max_width:
+  default: 1240
+  min: 960
+  max: 1680
+
+surface_gap:
+  default: 12
+  min: 4
+  max: 24
+
+compact_topic_list:
+  default: false
+
+enable_glass_surfaces:
+  default: true
+
+enable_topic_hover_lift:
+  default: true
+
+strong_topic_titles:
+  default: true
