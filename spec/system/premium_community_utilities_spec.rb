@@ -1,15 +1,22 @@
 # frozen_string_literal: true
 
 RSpec.describe "Premium community utility surfaces" do
-  fab!(:current_user, :admin)
+  fab!(:current_user) { Fabricate(:admin, refresh_auto_groups: true) }
   fab!(:post) { Fabricate(:post) }
   fab!(:group) { Fabricate(:group, name: "premium-community") }
+
+  let(:topic_page) { PageObjects::Pages::Topic.new }
 
   before { upload_theme_or_component }
 
   it "keeps the native bookmarks list usable" do
-    Fabricate(:bookmark, bookmarkable: post, user: current_user)
     sign_in(current_user)
+    topic_page.visit_topic(post.topic)
+    topic_page.expand_post_actions(post)
+    topic_page.click_post_action_button(post, :bookmark)
+
+    expect(topic_page).to have_post_bookmarked(post, with_reminder: false)
+
     visit("/u/#{current_user.username}/activity/bookmarks")
 
     expect(page).to have_css(".user-activity-bookmarks-page")
