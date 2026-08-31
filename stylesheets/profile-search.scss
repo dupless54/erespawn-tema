@@ -137,7 +137,11 @@
     a {
       color: var(--er-text);
       font-weight: 650;
-      text-decoration-color: color-mix(in srgb, var(--er-accent) 35%, transparent);
+      text-decoration-color: color-mix(
+        in srgb,
+        var(--er-accent) 35%,
+        transparent
+      );
       text-underline-offset: 0.15em;
     }
   }
