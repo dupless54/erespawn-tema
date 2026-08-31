@@ -3,40 +3,39 @@
 Last updated: 2026-08-31
 
 ## Repository state
-- Premium foundation and premium discovery/topic-list v2 are merged to `main`.
+- Premium foundation, discovery/topic-list v2 and topic-reading/composer v3 are merged to `main`.
 - Canonical minimum-token agent rules live in root `AGENTS.md`.
-- Active development branch: `feat/premium-topic-reading-v3`.
+- Active development branch: `feat/premium-profile-search-v4`.
 - Target: current/latest Discourse theme APIs and official theme skeleton.
 
-## Active premium reading phase
-1. Treat the topic reading page as a premium product surface without replacing native Discourse topic/post templates.
-2. Upgrade `#topic-title` into a strong reading hero while preserving status/category/tag/edit semantics.
-3. Upgrade `.topic-map` into a compact reading-summary dashboard with native users, stats, controls and estimated read time intact.
-4. Deepen post-card hierarchy: author metadata, avatar framing, post content, post controls, quotes, oneboxes, tables and media.
-5. Style the sticky topic timeline/progress and footer controls without changing navigation logic or click targets.
-6. Support both current composer styling and the upcoming `uc-enable-composer-redesign` path without owning editor/reply-area geometry.
-7. Keep Light/Dark parity and derive all runtime color from Discourse CSS variables and eRespawn semantic aliases.
-8. Keep avatar decorations/nameplates/flairs composable; no clipping, masks, forced z-index resets or wrapper replacement.
+## Active premium identity/discovery phase
+1. Upgrade native user/group cards without replacing `user-card-contents` or changing the current `fk-d-menu[data-identifier="usercard"]` integration.
+2. Preserve core `overflow: visible` behavior around user-card content so avatar decorations, flairs and plugin cosmetics remain composable.
+3. Upgrade full user/group profile pages, navigation, stats and content surfaces while preserving responsive profile layout and controls.
+4. Upgrade the Glimmer search menu and full search page using current native classes and result structure.
+5. Upgrade the revamped user/notification menu and hamburger surfaces while retaining tab, notification, unread and focus semantics.
+6. Keep Light/Dark parity and derive runtime color from Discourse CSS variables through the existing eRespawn semantic token layer.
+7. Keep hover progressive only; touch/mobile must expose complete persistent state and controls.
+8. Keep device-only geometry in `desktop/desktop.scss` and `mobile/mobile.scss`; shared V4 rules live in `stylesheets/profile-search.scss`.
 
 ## Design direction
-- Topic title reads like a compact SaaS page header rather than a loose heading above a forum stream.
-- Topic map reads like a small analytics/status strip, not a legacy summary table.
-- Posts remain clearly individual conversation units with restrained elevation and strong author/content/action hierarchy.
-- Quotes, embeds, code, tables and images share the same surface/radius/border language as the rest of the product.
-- Timeline/progress feels integrated with the theme while staying mechanically native.
-- Composer looks premium but remains controlled by Discourse for resize, focus slide, preview and save-area layout.
+- User cards should feel like premium identity cards rather than generic popovers while still supporting arbitrary plugin metadata.
+- Full profiles should read as product account/community profiles with a strong hero, clean navigation and modular stat/content surfaces.
+- Search should behave like a lightweight command palette in the header and a curated result feed on the full page.
+- Notifications and user-menu tabs should use the same surface, state and density language as sidebar/topic navigation.
+- No cosmetic layer should be clipped, masked, flattened or replaced for visual convenience.
 
 ## Compatibility invariants
 - Avatar decorations/nameplates/cosmetic pseudo-elements must remain visible and correctly layered.
-- Optional plugin markup may be enhanced but never required.
-- Avoid broad `overflow: hidden`, masks, transforms, pseudo-element replacement, or z-index resets on user/avatar/name wrappers.
-- Avoid template overrides when stable native selectors and theme APIs are sufficient.
-- Do not force composer/editor/reply-area heights or hide the grippie; Discourse owns composer resize and save-area geometry.
-- The upcoming composer-redesign styles must be scoped under the native `uc-enable-composer-redesign` class when overriding redesign-specific borders/surfaces.
-- Hover remains progressive enhancement only; touch interaction must remain complete without it.
+- Do not set overflow clipping on `fk-d-menu[data-identifier="usercard"]`, `.fk-d-menu__inner-content`, `.user-card-avatar`, `.user-profile-avatar` or plugin-owned cosmetic wrappers.
+- Optional plugin user-card metadata/outlets may be enhanced but never assumed to exist.
+- Avoid user-card/profile transforms and z-index resets that can create new stacking contexts around cosmetic layers.
+- Search result links, user-menu tabs, unread notifications and keyboard focus must retain native semantics.
+- Do not replace current user/search/menu Glimmer templates when stable core selectors are sufficient.
+- Mobile slide-in menus keep native full-height geometry; premium radius/elevation is applied only where it does not break edge-to-edge interaction.
 
 ## Next validation gate
-- Commit the v3 reading layer and open a PR from `feat/premium-topic-reading-v3` to `main`.
+- Commit V4 as a bounded feature commit and open a PR from `feat/premium-profile-search-v4` to `main`.
 - Required official Discourse Theme GitHub Action must be GREEN on the exact PR head.
-- Verify Ember Build and the shared core-feature system test, especially topic reply/composer flow.
+- Verify Ember Build and shared Theme System Tests after the new shared stylesheet import.
 - Review changed paths against task scope before merge.
