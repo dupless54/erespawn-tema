@@ -59,3 +59,15 @@ Premium search/menu styling must retain native search links, user-menu tabs, unr
 
 ## D-020 — Shared identity/search CSS is a `stylesheets/` module
 Profile, user-card, search and user-menu rules shared across device targets live in `stylesheets/profile-search.scss`, loaded by both desktop and mobile stylesheets. Device-specific geometry stays in the device entrypoints.
+
+## D-021 — Auth flows are visual-only theme targets
+Login, signup, invite, password-reset and activation screens may receive premium surfaces and focus styling, but the theme must not change form ids/names, authentication actions, user-field behavior, social-login controls or password-helper mechanics.
+
+## D-022 — Directory container mechanics belong to core
+The users directory may receive card/elevation styling, but `.directory-table-container` transform, horizontal overflow and container-query table/card behavior must remain native so fixed dropdowns and responsive data labels continue to work.
+
+## D-023 — DModal geometry belongs to Discourse
+The theme may style DModal backgrounds, borders, top corners, headers, bodies and footers. It must not override desktop width constraints or mobile fixed/full-width/keyboard/safe-area geometry. Legacy theme rules that globally narrow `.d-modal__container` on mobile must be removed.
+
+## D-024 — Shared auxiliary CSS is a `stylesheets/` module
+Auth, preferences, directory, badges and modal chrome shared across device targets live in `stylesheets/auxiliary-surfaces.scss`. Device entrypoints only load that module and keep genuinely device-specific refinements.

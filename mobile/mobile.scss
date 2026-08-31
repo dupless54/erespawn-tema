@@ -1,5 +1,6 @@
 @use "topic-reading";
 @use "profile-search";
+@use "auxiliary-surfaces";
 
 // Mobile-only refinements. Touch users must get the complete interaction model
 // without hover and without geometry changes that interfere with the composer
@@ -213,12 +214,12 @@
 .menu-panel,
 .select-kit-body,
 .modal-inner-container,
-.d-modal__container,
 .composer-popup {
   border-radius: clamp(10px, var(--er-radius-card), 16px);
 }
 
-.d-modal__container,
+// Keep legacy modal wrappers constrained, but let the current DModal mobile
+// bottom sheet retain core's full-width fixed geometry.
 .modal-inner-container {
   max-width: calc(100vw - 1rem);
   margin-inline: auto;

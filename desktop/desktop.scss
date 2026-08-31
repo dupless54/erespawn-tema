@@ -1,5 +1,6 @@
 @use "topic-reading";
 @use "profile-search";
+@use "auxiliary-surfaces";
 
 // Desktop-only refinements. Shared color/component behavior stays in
 // common/common.scss so light/dark mode and tablet behavior remain coherent.
