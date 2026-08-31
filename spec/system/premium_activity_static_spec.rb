@@ -4,16 +4,14 @@ RSpec.describe "Premium activity and static surfaces" do
   before_all { UserActionManager.enable }
 
   fab!(:current_user, :admin)
-  fab!(:topic)
+  fab!(:topic) { Fabricate(:topic_with_op) }
   fab!(:activity_post) { Fabricate(:post, topic:, user: current_user) }
   fab!(:notification) { Fabricate(:notification, user: current_user, read: false) }
 
-  before do
-    UserActionManager.post_created(activity_post)
-    upload_theme_or_component
-  end
+  before { upload_theme_or_component }
 
   it "keeps the native user activity stream usable" do
+    UserActionManager.post_created(activity_post)
     sign_in(current_user)
     PageObjects::Pages::UserActivityStream.new.visit_replies(current_user)
 
@@ -41,10 +39,10 @@ RSpec.describe "Premium activity and static surfaces" do
     expect(page).to have_css(".about__main-content")
   end
 
-  it "keeps the native faq static page usable" do
-    visit("/faq")
+  it "keeps the native guidelines static page usable" do
+    visit("/guidelines")
 
-    expect(page).to have_css(".static-faq")
+    expect(page).to have_css(".static-guidelines")
     expect(page).to have_css(".body-page")
   end
 end
