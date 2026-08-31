@@ -3,6 +3,7 @@
 @use "auxiliary-surfaces";
 @use "community-utilities";
 @use "activity-static";
+@use "moderation-workflows";
 
 // Desktop-only refinements. Shared color/component behavior stays in
 // common/common.scss so light/dark mode and tablet behavior remain coherent.
