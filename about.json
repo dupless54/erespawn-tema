@@ -1,0 +1,13 @@
+{
+  "name": "eRespawn Premium",
+  "component": false,
+  "authors": "eRespawn / dupless54",
+  "about_url": "https://github.com/dupless54/erespawn-tema",
+  "license_url": "https://github.com/dupless54/erespawn-tema/blob/main/LICENSE",
+  "learn_more": "https://github.com/dupless54/erespawn-tema#readme",
+  "theme_version": "0.1.0",
+  "minimum_discourse_version": null,
+  "maximum_discourse_version": null,
+  "assets": {},
+  "modifiers": {}
+}
