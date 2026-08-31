@@ -47,3 +47,15 @@ Redesign-specific composer surface/border overrides must live under the native `
 
 ## D-016 — Shared reading CSS is a `stylesheets/` module
 Topic-reading rules shared by desktop and mobile live in `stylesheets/topic-reading.scss` and are loaded by both device targets. Device-only geometry remains in `desktop/desktop.scss` and `mobile/mobile.scss`.
+
+## D-017 — User-card overflow is a compatibility boundary
+Current Discourse explicitly keeps the `fk-d-menu[data-identifier="usercard"]` inner content overflow visible. The theme must preserve this behavior and must not introduce clipping around user-card/avatar/profile cosmetic anchoring layers.
+
+## D-018 — Identity surfaces must accept arbitrary plugin metadata
+User/group cards and profile pages may style generic metadata, badge, status and public-field containers, but must not depend on a fixed child order or assume optional plugin connectors exist.
+
+## D-019 — Search and user-menu semantics remain native
+Premium search/menu styling must retain native search links, user-menu tabs, unread/pending notification classes, focus-within behavior and mobile slide-in mechanics. Visual refinement is not a reason to replace current Glimmer structures.
+
+## D-020 — Shared identity/search CSS is a `stylesheets/` module
+Profile, user-card, search and user-menu rules shared across device targets live in `stylesheets/profile-search.scss`, loaded by both desktop and mobile stylesheets. Device-specific geometry stays in the device entrypoints.
