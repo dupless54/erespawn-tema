@@ -1,0 +1,153 @@
+// Premium topic-list treatment. It styles native Discourse markup rather than
+// replacing templates, so bulk select, moderation, plugins and routing stay intact.
+.topic-list:not(.--d-topic-cards) {
+  border-collapse: separate;
+  border-spacing: 0 var(--er-gap);
+
+  .topic-list-header .topic-list-data {
+    padding-block: 0.55rem;
+    color: var(--er-text-muted);
+    font-size: var(--font-down-1);
+    font-weight: 600;
+    border-bottom: 0;
+  }
+
+  .topic-list-body .topic-list-item {
+    .topic-list-data {
+      padding-block: var(--er-topic-pad-block);
+      background: var(--er-surface-raised);
+      border-block: 1px solid var(--er-border);
+      transition:
+        background-color var(--er-motion-fast) ease,
+        border-color var(--er-motion-fast) ease,
+        box-shadow var(--er-motion-fast) ease;
+    }
+
+    .topic-list-data:first-child {
+      padding-inline-start: var(--er-topic-pad-inline);
+      border-inline-start: 1px solid var(--er-border);
+      border-start-start-radius: var(--er-card-radius);
+      border-end-start-radius: var(--er-card-radius);
+    }
+
+    .topic-list-data:last-child {
+      padding-inline-end: var(--er-topic-pad-inline);
+      border-inline-end: 1px solid var(--er-border);
+      border-start-end-radius: var(--er-card-radius);
+      border-end-end-radius: var(--er-card-radius);
+    }
+
+    &:hover .topic-list-data,
+    &:focus-within .topic-list-data {
+      background: var(--er-surface-hover);
+      border-color: var(--er-border-strong);
+    }
+
+    &:focus-within .topic-list-data {
+      box-shadow: inset 0 0 0 1px var(--er-accent-medium);
+    }
+
+    &.selected .topic-list-data {
+      background: var(--er-accent-soft);
+      border-color: color-mix(in srgb, var(--tertiary) 36%, var(--er-border));
+    }
+  }
+
+  td.main-link {
+    .title {
+      color: var(--primary);
+      font-weight: 650;
+      letter-spacing: -0.012em;
+      text-wrap: pretty;
+    }
+
+    .topic-excerpt {
+      max-width: 72ch;
+      margin-top: 0.35rem;
+      color: var(--er-text-muted);
+      line-height: 1.45;
+    }
+
+    .link-bottom-line {
+      margin-top: 0.35rem;
+    }
+  }
+
+  .posters {
+    .avatar {
+      box-shadow: 0 0 0 2px var(--er-surface-raised);
+      transition: transform var(--er-motion-fast) var(--er-ease);
+    }
+
+    a:hover .avatar,
+    a:focus-visible .avatar {
+      transform: translateY(-1px) scale(1.03);
+    }
+  }
+
+  .num,
+  .activity {
+    color: var(--er-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// Current Glimmer latest-topic-list item markup (Discourse 2026.x).
+.latest-topic-list-item {
+  margin-block: calc(var(--er-gap) * 0.5);
+  padding: var(--er-topic-pad-block) var(--er-topic-pad-inline);
+  background: var(--er-surface-raised);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-card-radius);
+  box-shadow: var(--er-shadow-sm);
+  transition:
+    background-color var(--er-motion-fast) ease,
+    border-color var(--er-motion-fast) ease,
+    box-shadow var(--er-motion-medium) var(--er-ease),
+    transform var(--er-motion-medium) var(--er-ease);
+
+  &:hover {
+    .discourse-no-touch & {
+      background: var(--er-surface-hover);
+      border-color: var(--er-border-strong);
+      box-shadow: var(--er-shadow-md);
+      transform: translateY(-2px);
+    }
+  }
+
+  &:focus-within {
+    border-color: color-mix(in srgb, var(--tertiary) 42%, var(--er-border));
+    box-shadow: var(--er-shadow-focus);
+  }
+
+  .main-link .top-row a.title,
+  .main-link .top-row .title {
+    color: var(--primary);
+    font-weight: 650;
+    letter-spacing: -0.012em;
+    text-wrap: pretty;
+  }
+
+  .main-link .bottom-row,
+  .topic-stats,
+  .topic-last-activity {
+    color: var(--er-text-muted);
+  }
+
+  .topic-poster {
+    // Deliberately no clipping/mask/overflow so avatar decoration plugins remain visible.
+    position: relative;
+  }
+}
+
+.badge-category__wrapper {
+  border-radius: var(--d-border-radius-pill);
+
+  .badge-category {
+    gap: 0.25rem;
+  }
+}
+
+.discourse-tags .discourse-tag {
+  border-radius: var(--d-border-radius-pill);
+}
