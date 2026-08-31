@@ -11,7 +11,7 @@ Last updated: 2026-08-31
 ## Active foundation phase
 1. Two native theme color schemes are defined: `eRespawn Light` and `eRespawn Dark`.
 2. Runtime SCSS consumes Discourse CSS custom properties; palette HEX values live only in `about.json` color-scheme metadata.
-3. Shared UI lives in `common/common.scss`; semantic aliases/settings live in importable `stylesheets/color_definitions.scss`; device refinements live in `desktop/desktop.scss` and `mobile/mobile.scss`.
+3. Semantic color/settings aliases live in Discourse's special `common/color_definitions.scss` target; shared UI lives in `common/common.scss`; device refinements live in `desktop/desktop.scss` and `mobile/mobile.scss`.
 4. Topic lists support native classic table markup and current Glimmer `latest-topic-list-item` markup without template replacement.
 5. Header/search, navigation/filter pills, post stream, quotes/code, composer, menus and modals have the first SaaS-quality premium pass.
 6. Theme settings provide functional topic cards, card radius, content width, topic density and header blur controls.
@@ -31,5 +31,5 @@ Last updated: 2026-08-31
 
 ## Next validation gate
 - Required Discourse Theme GitHub Action on the exact PR head.
-- Verify theme compilation for `common`, `desktop` and `mobile` targets.
+- Verify theme compilation for color definitions plus `common`, `desktop` and `mobile` targets.
 - Review changed paths against task scope and inspect any lint/system-test failure before merge.

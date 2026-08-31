@@ -21,5 +21,5 @@ Required official Discourse Theme CI on the latest exact PR head is authoritativ
 ## D-007 — Palette metadata is the only static color source
 Light/dark HEX values belong in `about.json` color schemes. Runtime SCSS must consume native Discourse CSS variables or eRespawn semantic aliases derived from those variables; do not duplicate palette HEX values in stylesheets.
 
-## D-008 — Official stylesheet targets only
-Canonical runtime targets are `common/common.scss`, `desktop/desktop.scss`, and `mobile/mobile.scss`. Importable helper SCSS belongs under the current supported `stylesheets/` tree. Do not create parallel dead stylesheet architectures merely to mirror a requested filename.
+## D-008 — Color definitions are a special Discourse target
+Use `common/color_definitions.scss` for theme CSS custom-property declarations that must follow the active color scheme. Do not import it as a generic helper from `common/common.scss`; Discourse compiles it as the color-definitions target. General reusable SCSS helpers, when needed, belong under `stylesheets/`.
