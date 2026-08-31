@@ -18,7 +18,7 @@ body {
       transparent 28rem
     ),
     var(--er-page);
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
 }
 
 .wrap {
@@ -234,7 +234,6 @@ body {
 .category-boxes .badge-category__wrapper,
 .category-list .badge-category__wrapper {
   --er-category-color: var(--category-badge-color, var(--tertiary));
-
   padding: 0.18rem 0.48rem;
   background: color-mix(in srgb, var(--er-category-color) 11%, var(--secondary));
   border: 1px solid color-mix(in srgb, var(--er-category-color) 18%, transparent);
