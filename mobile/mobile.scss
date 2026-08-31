@@ -3,6 +3,7 @@
 @use "auxiliary-surfaces";
 @use "community-utilities";
 @use "activity-static";
+@use "moderation-workflows";
 
 // Mobile-only refinements. Touch users must get the complete interaction model
 // without hover and without geometry changes that interfere with the composer

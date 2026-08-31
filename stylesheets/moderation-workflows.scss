@@ -1,0 +1,396 @@
+@use "lib/viewport";
+
+// Premium presentation for the native Discourse review queue. Review data,
+// filtering, claiming, actions, sticky moderator controls, post scrolling and
+// responsive layout remain core-owned.
+.reviewable {
+  .reviewable-top-nav {
+    padding: 0.4rem;
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+  }
+
+  .reviewable-container {
+    gap: 1rem;
+  }
+
+  .reviewable-filters {
+    background: var(--er-surface);
+    border-color: var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+
+    .filter-label,
+    .name {
+      color: var(--er-text-soft);
+      font-weight: 625;
+    }
+
+    .select-kit-header,
+    input,
+    .d-date-time-input {
+      background: var(--er-surface-subtle);
+      border-color: var(--er-border);
+      border-radius: var(--er-radius-control);
+    }
+
+    .select-kit-header:focus-visible,
+    input:focus-visible {
+      border-color: var(--er-accent);
+      box-shadow: var(--er-focus-ring);
+    }
+
+    .reviewable-filters-actions {
+      padding-top: 0.25rem;
+      border-top: 1px solid var(--er-border-soft);
+    }
+  }
+
+  .reviewable-list {
+    min-width: 0;
+  }
+
+  .reviewables {
+    display: grid;
+    gap: 1rem;
+  }
+}
+
+// Current review queue item markup. Do not replace flex/sticky/z-index/overflow
+// mechanics defined by core; those are required for action dropdowns and the
+// scrollable post preview.
+.review-item {
+  margin-bottom: 1rem;
+  border-radius: var(--er-radius-card);
+  transition:
+    opacity var(--er-motion-fast) ease,
+    filter var(--er-motion-fast) ease;
+
+  &.reviewable-stale {
+    opacity: 0.72;
+  }
+
+  &__primary-content {
+    background: var(--er-surface);
+    border-color: var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+    transition:
+      border-color var(--er-motion-fast) ease,
+      box-shadow var(--er-motion-medium) var(--er-ease);
+  }
+
+  &:focus-within &__primary-content {
+    border-color: var(--er-accent-low);
+    box-shadow: var(--er-focus-ring);
+  }
+
+  .discourse-no-touch &:hover &__primary-content {
+    border-color: var(--er-border-strong);
+    box-shadow: var(--er-shadow-md);
+  }
+
+  &__flag-summary {
+    border-radius: var(--er-radius-card);
+  }
+
+  &__header {
+    background:
+      linear-gradient(
+        120deg,
+        color-mix(in srgb, var(--er-accent) 18%, transparent),
+        transparent 54%
+      ),
+      color-mix(in srgb, var(--primary) 92%, var(--secondary));
+    border-start-start-radius: var(--er-radius-card);
+    border-start-end-radius: var(--er-radius-card);
+    color: var(--secondary);
+  }
+
+  &__flag-label {
+    font-weight: 725;
+    letter-spacing: -0.01em;
+  }
+
+  &__flag-badges {
+    color: color-mix(in srgb, var(--secondary) 82%, var(--primary));
+  }
+
+  &__status {
+    border: 1px solid color-mix(in srgb, currentcolor 18%, transparent);
+    font-weight: 650;
+  }
+
+  &__meta {
+    background: var(--er-surface);
+    border-bottom-color: var(--er-border-soft);
+  }
+
+  &__meta-label {
+    color: var(--er-text-muted);
+    font-size: var(--font-down-1);
+    font-weight: 650;
+  }
+
+  &__meta-content {
+    color: var(--er-text-soft);
+
+    .created-by .names span a {
+      color: var(--er-accent);
+      font-weight: 650;
+    }
+  }
+
+  &__meta-topic-title {
+    min-width: 0;
+
+    > a,
+    .title-text {
+      color: var(--er-text);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      text-wrap: pretty;
+    }
+  }
+
+  .reviewable-created-date,
+  .reviewable-permalink-copy .d-icon {
+    color: var(--er-text-muted);
+  }
+
+  &__post {
+    background: var(--er-surface);
+  }
+
+  &__post-content {
+    background: var(--er-surface-subtle);
+    border: 1px solid var(--er-border-soft);
+    border-radius: var(--er-radius-control);
+    color: var(--er-text-soft);
+
+    blockquote {
+      background: var(--er-surface);
+      border-inline-start-color: var(--er-accent);
+      border-radius: var(--er-radius-small);
+    }
+
+    pre {
+      background: var(--er-surface);
+      border: 1px solid var(--er-border);
+      border-radius: var(--er-radius-small);
+    }
+  }
+
+  &__toggle-post {
+    color: var(--er-text-soft);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--er-accent);
+    }
+  }
+
+  &__insights {
+    background: var(--er-surface);
+
+    .d-nav-submenu__tabs {
+      border-bottom-color: var(--er-border);
+    }
+  }
+
+  &__aside {
+    background: var(--er-surface-raised);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-card);
+    box-shadow: var(--er-shadow-sm);
+
+    > *:not(:last-child) {
+      border-bottom-color: var(--er-border-soft);
+    }
+  }
+
+  &__aside-title {
+    color: var(--er-text);
+    font-weight: 700;
+    letter-spacing: -0.012em;
+  }
+
+  &__moderator-actions {
+    .reviewable-action,
+    .reject-post summary,
+    .btn {
+      border-radius: var(--er-radius-control);
+    }
+  }
+
+  &__assigned {
+    color: var(--er-text-soft);
+
+    .d-icon {
+      color: var(--er-accent);
+    }
+  }
+
+  .editable-fields {
+    .editable-field {
+      padding: 0.65rem 0.72rem;
+      background: var(--er-surface-subtle);
+      border: 1px solid var(--er-border-soft);
+      border-radius: var(--er-radius-control);
+    }
+  }
+}
+
+.reviewable-timeline {
+  .timeline-event {
+    background: var(--er-surface);
+
+    &:not(:last-child) {
+      border-bottom-color: var(--er-border-soft);
+    }
+  }
+
+  .timeline-event__icon,
+  .timeline-event__description,
+  .timeline-empty {
+    color: var(--er-text-muted);
+  }
+
+  .timeline-event__title {
+    color: var(--er-text-soft);
+  }
+}
+
+.reviewable-note-form {
+  background: var(--er-surface-subtle);
+  border: 1px solid var(--er-border-soft);
+  border-radius: 0 0 var(--er-radius-control) var(--er-radius-control);
+
+  textarea {
+    background: var(--er-surface);
+    border-color: var(--er-border);
+  }
+}
+
+.reviewable-scores {
+  color: var(--er-text-soft);
+
+  &__table-wrapper {
+    background: var(--er-surface);
+    border: 1px solid var(--er-border);
+    border-radius: var(--er-radius-control);
+  }
+
+  th {
+    background: var(--er-surface-subtle);
+    color: var(--er-text);
+  }
+
+  td,
+  th {
+    border-color: var(--er-border-soft);
+  }
+}
+
+.reviewable-user-info {
+  .reviewable-user-fields,
+  .reviewable-user-details {
+    color: var(--er-text-soft);
+  }
+
+  .reviewable-user-details:not(:last-child) {
+    border-bottom-color: var(--er-border);
+  }
+
+  .name {
+    color: var(--er-text);
+  }
+}
+
+.reviewable-score-reason,
+.reviewable-conversation-post {
+  padding: 0.65rem 0.72rem;
+  background: var(--er-surface-subtle);
+  border: 1px solid var(--er-border-soft);
+  border-radius: var(--er-radius-control);
+}
+
+.reviewable-settings,
+.reviewable-histories {
+  padding: 1rem;
+  background: var(--er-surface);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+}
+
+.no-review {
+  margin-top: 0;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  background: var(--er-surface);
+  border: 1px dashed var(--er-border-strong);
+  border-radius: var(--er-radius-card);
+  color: var(--er-text-muted);
+  text-align: center;
+}
+
+// Compatibility bridge for older reviewable markup still emitted by optional
+// integrations. Current core uses .review-item above.
+.reviewable-item {
+  background: var(--er-surface);
+  border: 1px solid var(--er-border);
+  border-radius: var(--er-radius-card);
+  box-shadow: var(--er-shadow-sm);
+}
+
+@include viewport.until(sm) {
+  .reviewable {
+    .reviewable-top-nav {
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+    }
+
+    .reviewable-container {
+      gap: 0.65rem;
+    }
+
+    .reviewable-filters {
+      padding: 0.75rem;
+      background: var(--er-surface);
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+      box-shadow: none;
+    }
+  }
+
+  .review-item {
+    border-color: var(--er-border);
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+    box-shadow: 0 3px 14px color-mix(in srgb, var(--primary) 5%, transparent);
+
+    &__primary-content,
+    &__flag-summary,
+    &__aside {
+      border-radius: clamp(10px, var(--er-radius-card), 16px);
+    }
+
+    &__header {
+      border-start-start-radius: clamp(10px, var(--er-radius-card), 16px);
+      border-start-end-radius: clamp(10px, var(--er-radius-card), 16px);
+    }
+
+    &__aside {
+      box-shadow: none;
+    }
+
+    &__post-content {
+      padding: 0.7rem;
+    }
+  }
+
+  .reviewable-settings,
+  .reviewable-histories,
+  .no-review {
+    border-radius: clamp(10px, var(--er-radius-card), 16px);
+  }
+}

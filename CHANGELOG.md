@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.9.0 — 2026-09-01
+
+Premium moderation-workflow pass built on the merged 0.8.0 activity/static release.
+
+### Review queue
+- Added premium framing for the current `.reviewable-container`, filters, reviewable cards and moderation action areas.
+- Refined review type/status metadata, topic context, post-preview surfaces, histories, scores and conversation/editable-field chrome.
+- Added responsive small-screen treatment without replacing current review filter layout or action mechanics.
+
+### Compatibility and quality
+- Preserved native review filtering, claiming/unclaiming, action dropdowns, post collapse/expand behavior, image blurring, score-table scrolling and moderator workflows.
+- Introduced no theme JavaScript, review route replacement or template override.
+- Kept avatar, flair, nameplate and cosmetic-owned wrapper geometry untouched.
+- Added focused current-Discourse system smoke coverage for the native `/review` queue.
+- Merge remains gated by exact-head static Stylelint/Prettier and official Discourse Theme CI.
+
 ## 0.8.0 — 2026-09-01
 
 Premium activity, notification and public/static information pass built on the merged 0.7.0 community-utilities release.
