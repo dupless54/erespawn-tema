@@ -16,7 +16,7 @@ RSpec.describe "Premium moderation workflows" do
     expect(page).to have_css(".reviewable-container")
     expect(page).to have_css(".reviewable-filters")
     expect(page).to have_css(".reviewable-list")
-    expect(page).to have_css(".reviewable-item")
-    expect(page).to have_css(".reviewable-actions")
+    expect(page).to have_css(".review-item[data-reviewable-id='#{reviewable.id}']")
+    expect(page).to have_css(".review-item__moderator-actions")
   end
 end
