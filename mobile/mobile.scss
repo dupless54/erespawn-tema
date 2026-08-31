@@ -1,3 +1,5 @@
+@use "topic-reading";
+
 // Mobile-only refinements. Touch users must get the complete interaction model
 // without hover and without geometry changes that interfere with the composer
 // or avatar/nameplate cosmetics.

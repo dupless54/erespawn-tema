@@ -35,3 +35,15 @@ Unread/unseen, pinned, closed, visited, selected and bulk-selected topic states 
 
 ## D-012 — Prefer explicit cross-browser tokens over typed arithmetic
 Avoid CSS typed-arithmetic multiplication/division for theme sizing when browser support is uneven. Use explicit semantic tokens, subtraction where safe, or `clamp()` to preserve predictable Firefox/Chromium/WebKit behavior.
+
+## D-013 — Topic reading surfaces remain native
+Premium topic title, topic map, post stream, timeline and footer styling must target current core structure without replacing the topic/post templates or changing routing, moderation, post-action or timeline mechanics.
+
+## D-014 — Composer geometry belongs to Discourse
+The theme may style composer surfaces, borders, toolbar controls, preview backgrounds and focus accents. It must not own `reply-area`, editor or preview heights, hide the grippie, or interfere with current/upcoming composer focus/resize geometry.
+
+## D-015 — Upcoming composer redesign gets scoped overrides
+Redesign-specific composer surface/border overrides must live under the native `uc-enable-composer-redesign` scope so the theme remains compatible before and after the core redesign becomes default.
+
+## D-016 — Shared reading CSS is a `stylesheets/` module
+Topic-reading rules shared by desktop and mobile live in `stylesheets/topic-reading.scss` and are loaded by both device targets. Device-only geometry remains in `desktop/desktop.scss` and `mobile/mobile.scss`.

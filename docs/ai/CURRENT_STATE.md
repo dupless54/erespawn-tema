@@ -3,38 +3,40 @@
 Last updated: 2026-08-31
 
 ## Repository state
-- Premium foundation is merged to `main`.
+- Premium foundation and premium discovery/topic-list v2 are merged to `main`.
 - Canonical minimum-token agent rules live in root `AGENTS.md`.
-- Active development branch: `feat/premium-topic-discovery-v2`.
+- Active development branch: `feat/premium-topic-reading-v3`.
 - Target: current/latest Discourse theme APIs and official theme skeleton.
 
-## Active premium discovery phase
-1. Preserve the two native color schemes: `eRespawn Light` and `eRespawn Dark`.
-2. Keep runtime colors derived from Discourse CSS custom properties; palette HEX values remain only in `about.json` metadata.
-3. Upgrade semantic tokens with raised/active/stat surfaces, stronger elevation tokens and cross-browser-safe radius/gap calculations.
-4. Push classic Glimmer topic rows and `latest-topic-list-item` toward a social/SaaS content-card hierarchy without replacing native templates.
-5. Make unread/unseen, pinned, visited, closed, selected and bulk-selected states visually distinct while preserving core behavior.
-6. Upgrade header/search, sidebar, navigation/filter pills and category discovery tables/cards as one coherent shell.
-7. Keep hover as enhancement only; touch/mobile receives complete persistent states without relying on hover.
-8. Preserve native accessibility, routing, moderation controls, composer geometry and plugin-provided avatar/name cosmetics.
+## Active premium reading phase
+1. Treat the topic reading page as a premium product surface without replacing native Discourse topic/post templates.
+2. Upgrade `#topic-title` into a strong reading hero while preserving status/category/tag/edit semantics.
+3. Upgrade `.topic-map` into a compact reading-summary dashboard with native users, stats, controls and estimated read time intact.
+4. Deepen post-card hierarchy: author metadata, avatar framing, post content, post controls, quotes, oneboxes, tables and media.
+5. Style the sticky topic timeline/progress and footer controls without changing navigation logic or click targets.
+6. Support both current composer styling and the upcoming `uc-enable-composer-redesign` path without owning editor/reply-area geometry.
+7. Keep Light/Dark parity and derive all runtime color from Discourse CSS variables and eRespawn semantic aliases.
+8. Keep avatar decorations/nameplates/flairs composable; no clipping, masks, forced z-index resets or wrapper replacement.
 
 ## Design direction
-- Modern SaaS/community product aesthetic with restrained elevation, soft state surfaces and deliberate density.
-- Topic titles carry the strongest hierarchy; category/tag metadata and reply/view/activity stats are compact secondary chips.
-- Category discovery should feel like a curated product directory instead of an unstyled forum table.
-- Light and dark mode retain identical hierarchy and interaction semantics.
-- Desktop, tablet, mobile and very small widths must feel intentionally designed rather than simply scaled down.
+- Topic title reads like a compact SaaS page header rather than a loose heading above a forum stream.
+- Topic map reads like a small analytics/status strip, not a legacy summary table.
+- Posts remain clearly individual conversation units with restrained elevation and strong author/content/action hierarchy.
+- Quotes, embeds, code, tables and images share the same surface/radius/border language as the rest of the product.
+- Timeline/progress feels integrated with the theme while staying mechanically native.
+- Composer looks premium but remains controlled by Discourse for resize, focus slide, preview and save-area layout.
 
 ## Compatibility invariants
 - Avatar decorations/nameplates/cosmetic pseudo-elements must remain visible and correctly layered.
 - Optional plugin markup may be enhanced but never required.
 - Avoid broad `overflow: hidden`, masks, transforms, pseudo-element replacement, or z-index resets on user/avatar/name wrappers.
 - Avoid template overrides when stable native selectors and theme APIs are sufficient.
-- Do not force composer/editor heights; Discourse owns composer resize and save-area geometry.
-- Avoid CSS typed arithmetic that has uneven browser support when an explicit token or `clamp()` can express the same result.
+- Do not force composer/editor/reply-area heights or hide the grippie; Discourse owns composer resize and save-area geometry.
+- The upcoming composer-redesign styles must be scoped under the native `uc-enable-composer-redesign` class when overriding redesign-specific borders/surfaces.
+- Hover remains progressive enhancement only; touch interaction must remain complete without it.
 
 ## Next validation gate
-- Open PR from `feat/premium-topic-discovery-v2` to `main`.
+- Commit the v3 reading layer and open a PR from `feat/premium-topic-reading-v3` to `main`.
 - Required official Discourse Theme GitHub Action must be GREEN on the exact PR head.
-- Verify Ember Build and the shared core-feature system test, including topic reply/composer flow.
+- Verify Ember Build and the shared core-feature system test, especially topic reply/composer flow.
 - Review changed paths against task scope before merge.
