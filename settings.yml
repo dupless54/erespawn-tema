@@ -2,25 +2,21 @@ card_radius:
   default: 16
   min: 8
   max: 28
+  description: "Corner radius used by premium cards, menus and modal surfaces."
 
 content_max_width:
   default: 1240
   min: 960
   max: 1680
+  description: "Maximum width of the main Discourse content area in pixels."
 
 surface_gap:
   default: 12
   min: 4
   max: 24
+  description: "Vertical spacing between premium topic and content surfaces."
 
 compact_topic_list:
+  type: bool
   default: false
-
-enable_glass_surfaces:
-  default: true
-
-enable_topic_hover_lift:
-  default: true
-
-strong_topic_titles:
-  default: true
+  description: "Reduce vertical padding in topic lists for a denser layout."

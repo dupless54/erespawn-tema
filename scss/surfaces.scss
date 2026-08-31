@@ -67,12 +67,3 @@ blockquote {
   border-color: var(--er-border);
   border-radius: var(--er-radius-md);
 }
-
-// Keep plugin-owned cosmetic layers unconstrained.
-.user-card .card-content,
-.user-card .first-row,
-.user-card .usercard-controls,
-.user-main .about,
-.user-profile-primary-outlet {
-  overflow: visible;
-}

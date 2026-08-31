@@ -62,19 +62,6 @@ button:focus-visible,
   box-shadow: var(--er-shadow-md);
 }
 
-// Cosmetics safety: enhance the surrounding surface without clipping or
-// replacing plugin/core avatar/name decoration layers.
-.avatar,
-.avatar-wrapper,
-.topic-avatar,
-.topic-poster,
-.post-avatar,
-.names,
-.username,
-.name {
-  isolation: auto;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
