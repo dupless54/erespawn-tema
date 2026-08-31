@@ -65,7 +65,10 @@
     }
 
     &:hover .topic-list-data {
-      box-shadow: 0 12px 32px color-mix(in srgb, var(--primary) 8%, transparent);
+      box-shadow: 0
+        12px
+        32px
+        color-mix(in srgb, var(--primary) 8%, transparent);
     }
   }
 }
