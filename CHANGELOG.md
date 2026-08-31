@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.0.0 — 2026-09-01
+
+Premium bulk-topic management pass built on the merged 0.9.0 moderation release.
+
+### Topic bulk selection
+- Added premium framing for the native bulk-selection toolbar, action dropdown and selected-topic count.
+- Added explicit premium `.bulk-selected` cell treatment so topic-card backgrounds never hide the current selected-row state.
+- Refined native bulk checkboxes and focus/touch targets without replacing checkbox semantics or row-selection behavior.
+- Added responsive narrow-screen treatment using current `lib/viewport` helpers and hover enhancement only for `discourse-no-touch` devices.
+
+### Bulk action modal
+- Added restrained description and error surfaces inside the native `.topic-bulk-actions-modal`.
+- Kept DMenu, DModal, available-action permissions and topic bulk operations entirely core-owned.
+
+### Compatibility and quality
+- Introduced no theme JavaScript, topic-list template replacement or bulk-operation override.
+- Preserved native row-click/shift-click selection, checkbox state, plugin outlets and topic navigation outside bulk mode.
+- Kept avatar, flair, nameplate and cosmetic-owned wrapper geometry untouched.
+- Added focused current-Discourse system smoke coverage for the native `/latest` bulk-selection workflow.
+- Merge remains gated by exact-head static Stylelint/Prettier and official Discourse Theme CI.
+
 ## 0.9.0 — 2026-09-01
 
 Premium moderation-workflow pass built on the merged 0.8.0 activity/static release.
