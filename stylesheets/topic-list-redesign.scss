@@ -1,0 +1,368 @@
+@use "lib/viewport";
+
+// Topic discovery should read like a clean social feed, not a stack of nested
+// dashboard cards. Keep native Discourse topic-list markup and interactions;
+// this module only changes presentation and state hierarchy.
+
+html .topic-list {
+  .topic-list-header {
+    border-bottom: 1px solid var(--er-border-soft);
+  }
+
+  .topic-list-header .topic-list-data {
+    padding-block: 0.5rem;
+    color: var(--er-text-muted);
+    font-size: var(--font-down-2);
+    font-weight: 650;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+  }
+
+  td.main-link {
+    .link-top-line {
+      gap: 0.3rem;
+    }
+
+    .title,
+    a.title {
+      color: var(--er-text);
+      font-size: var(--font-up-1);
+      font-weight: 700;
+      line-height: 1.32;
+      letter-spacing: -0.018em;
+      text-wrap: pretty;
+    }
+
+    .topic-excerpt {
+      display: -webkit-box;
+      max-width: 74ch;
+      margin-top: 0.35rem;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      color: var(--er-text-muted);
+      font-size: var(--font-down-1);
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .link-bottom-line {
+      gap: 0.28rem 0.4rem;
+      margin-top: 0.38rem;
+    }
+  }
+
+  .num .number,
+  .num > a,
+  .activity .post-activity {
+    min-height: auto;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    color: var(--er-text-muted);
+    font-size: var(--font-down-1);
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .num a:hover,
+  .activity a:hover,
+  .num a:focus-visible,
+  .activity a:focus-visible {
+    color: var(--er-accent);
+  }
+
+  .posters .avatar {
+    outline-width: 1px;
+    box-shadow: 0 0 0 2px var(--er-surface);
+  }
+}
+
+html .topic-list-item.unseen-topic td.main-link,
+html .topic-list-item.unread-posts td.main-link {
+  box-shadow: none;
+}
+
+html .topic-list-item.unseen-topic td.main-link .title,
+html .topic-list-item.unread-posts td.main-link .title {
+  color: var(--er-text);
+  font-weight: 750;
+}
+
+html .topic-list-item.visited td.main-link .title,
+html .latest-topic-list-item.visited .main-link .title {
+  color: var(--er-text-soft);
+  font-weight: 650;
+}
+
+@if $topic-cards == true or $topic-cards == "true" {
+  html .topic-list:not(.--d-topic-cards) {
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+
+    .topic-list-body .topic-list-item > .topic-list-data {
+      padding-block: 0.9rem;
+      background: color-mix(in srgb, var(--er-surface) 98%, var(--er-page));
+      border-block: 1px solid var(--er-border-soft);
+      border-radius: 0;
+      box-shadow: none;
+      transition:
+        background-color var(--er-motion-fast) ease,
+        border-color var(--er-motion-fast) ease;
+    }
+
+    .topic-list-body .topic-list-item > .topic-list-data:first-child {
+      padding-inline-start: 1rem;
+      border-inline-start: 1px solid var(--er-border-soft);
+      border-start-start-radius: 14px;
+      border-end-start-radius: 14px;
+      box-shadow: none;
+    }
+
+    .topic-list-body .topic-list-item > .topic-list-data:last-child {
+      padding-inline-end: 1rem;
+      border-inline-end: 1px solid var(--er-border-soft);
+      border-start-end-radius: 14px;
+      border-end-end-radius: 14px;
+    }
+
+    .topic-list-body .topic-list-item:hover > .topic-list-data {
+      .discourse-no-touch & {
+        background: var(--er-surface-hover);
+        border-color: var(--er-border);
+        box-shadow: none;
+      }
+    }
+
+    .topic-list-body .topic-list-item:focus-within > .topic-list-data {
+      background: var(--er-surface-hover);
+      border-color: var(--er-accent-low);
+      box-shadow: none;
+    }
+
+    .topic-list-body .topic-list-item.unseen-topic > .topic-list-data:first-child,
+    .topic-list-body .topic-list-item.unread-posts > .topic-list-data:first-child {
+      border-inline-start: 3px solid var(--er-accent);
+    }
+
+    .topic-list-body .topic-list-item.pinned > .topic-list-data {
+      background: color-mix(in srgb, var(--highlight) 4%, var(--er-surface));
+    }
+
+    .topic-list-body .topic-list-item.selected > .topic-list-data,
+    .topic-list-body .topic-list-item.bulk-selected > .topic-list-data {
+      background: var(--er-surface-active);
+      border-color: var(--er-accent-low);
+    }
+  }
+}
+
+// Current Glimmer latest/category topic list items.
+html .latest-topic-list,
+html .top-topic-list {
+  .table-heading {
+    padding-inline: 0.2rem;
+    color: var(--er-text-muted);
+    font-size: var(--font-down-2);
+    font-weight: 650;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+  }
+}
+
+html .latest-topic-list-item {
+  margin-block: 0.45rem;
+  padding: 0.95rem 1rem;
+  gap: 0.85rem;
+  background: color-mix(in srgb, var(--er-surface) 98%, var(--er-page));
+  border: 1px solid var(--er-border-soft);
+  border-radius: 14px;
+  box-shadow: none;
+  transform: none;
+  transition:
+    background-color var(--er-motion-fast) ease,
+    border-color var(--er-motion-fast) ease;
+
+  .topic-poster .avatar {
+    width: 2.4rem;
+    height: 2.4rem;
+    outline-width: 1px;
+    box-shadow: 0 0 0 2px var(--er-surface);
+  }
+
+  .main-link {
+    min-width: 0;
+
+    .top-row {
+      gap: 0.3rem;
+      margin-bottom: 0.22rem;
+      font-size: var(--font-up-1);
+      line-height: 1.32;
+    }
+
+    .top-row a.title,
+    .top-row .title {
+      color: var(--er-text);
+      font-weight: 700;
+      letter-spacing: -0.018em;
+    }
+
+    .bottom-row {
+      gap: 0.28rem 0.4rem;
+      color: var(--er-text-muted);
+      font-size: var(--font-down-1);
+    }
+  }
+
+  .topic-stats {
+    gap: 0.55rem;
+    color: var(--er-text-muted);
+  }
+
+  .topic-stats .posts-map,
+  .topic-last-activity a {
+    min-height: auto;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    color: var(--er-text-muted);
+    font-size: var(--font-down-1);
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  &:hover {
+    .discourse-no-touch & {
+      background: var(--er-surface-hover);
+      border-color: var(--er-border);
+      box-shadow: none;
+      transform: none;
+    }
+  }
+
+  &:focus-within {
+    background: var(--er-surface-hover);
+    border-color: var(--er-accent-low);
+    box-shadow: var(--er-focus-ring);
+  }
+
+  &.unseen-topic,
+  &.unread-posts {
+    border-inline-start: 3px solid var(--er-accent);
+  }
+
+  &.pinned {
+    background-image: none;
+    background-color: color-mix(
+      in srgb,
+      var(--highlight) 4%,
+      var(--er-surface)
+    );
+  }
+}
+
+// Category/topic metadata should support the title, not compete with it.
+html .topic-list .badge-category__wrapper,
+html .latest-topic-list-item .badge-category__wrapper {
+  padding: 0.12rem 0.42rem;
+  background: color-mix(
+    in srgb,
+    var(--er-category-color, var(--tertiary)) 8%,
+    transparent
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--er-category-color, var(--tertiary)) 14%,
+    transparent
+  );
+
+  .badge-category__name {
+    font-size: var(--font-down-1);
+    font-weight: 600;
+  }
+}
+
+html .topic-list .discourse-tags .discourse-tag,
+html .latest-topic-list-item .discourse-tags .discourse-tag {
+  padding: 0.1rem 0.38rem;
+  background: transparent;
+  border-color: transparent;
+  color: var(--er-text-muted);
+  font-size: var(--font-down-1);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--er-accent-soft);
+    border-color: var(--er-accent-low);
+    color: var(--er-accent);
+  }
+}
+
+@include viewport.until(sm) {
+  html .topic-list:not(.--d-topic-cards) {
+    border-spacing: 0 0.42rem;
+
+    .topic-list-body .topic-list-item > .topic-list-data {
+      padding: 0.78rem 0.82rem;
+      border: 1px solid var(--er-border-soft);
+      border-radius: 13px;
+      box-shadow: none;
+    }
+
+    .topic-list-body .topic-list-item.unseen-topic > .topic-list-data,
+    .topic-list-body .topic-list-item.unread-posts > .topic-list-data {
+      border-inline-start: 3px solid var(--er-accent);
+    }
+  }
+
+  html .topic-list td.main-link {
+    .title,
+    a.title {
+      font-size: var(--font-0);
+      line-height: 1.34;
+    }
+
+    .topic-excerpt {
+      margin-top: 0.3rem;
+      font-size: var(--font-down-1);
+      -webkit-line-clamp: 2;
+    }
+
+    .link-bottom-line {
+      margin-top: 0.32rem;
+    }
+  }
+
+  html .topic-list .topic-item-stats {
+    margin-top: 0.52rem;
+    padding-top: 0.48rem;
+    border-top: 1px solid var(--er-border-soft);
+  }
+
+  html .latest-topic-list-item {
+    min-height: 0;
+    margin-block: 0.4rem;
+    padding: 0.78rem 0.82rem;
+    gap: 0.65rem;
+    border-radius: 13px;
+
+    .topic-poster .avatar {
+      width: 2.2rem;
+      height: 2.2rem;
+    }
+
+    .main-link .top-row {
+      font-size: var(--font-0);
+      line-height: 1.34;
+    }
+
+    .topic-stats {
+      gap: 0.35rem;
+    }
+  }
+}
