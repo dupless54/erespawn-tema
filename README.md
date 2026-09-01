@@ -2,10 +2,10 @@
 
 eRespawn Premium is a full Discourse theme for current Discourse releases. It keeps native routing, templates, accessibility semantics, plugin outlets and interaction mechanics intact while applying a cohesive premium visual system across the forum.
 
-Current theme version: **1.1.0**.
+Current theme version: **1.2.0**.
 
 ## Highlights
-- Premium native topic lists and category discovery without replacing core topic-row markup.
+- Clean social-feed-inspired native topic lists with strong title hierarchy, restrained metadata and no nested dashboard-card chrome.
 - Refined topic-reading surfaces, topic map, post stream, timeline and composer chrome.
 - Premium profile, user-card, search, user-menu and notification surfaces.
 - Refined login, signup, invite, password-reset, preferences, directory, badges and modal chrome.
@@ -30,7 +30,7 @@ For an existing installation, use Discourse's normal theme update action to pull
 ## Theme settings
 | Setting | Default | Purpose |
 | --- | --- | --- |
-| `topic_cards` | `true` | Gives native topic lists premium card surfaces without replacing their markup. |
+| `topic_cards` | `true` | Enables the restrained native topic-feed surfaces without replacing topic-row markup. |
 | `card_radius` | `16` | Controls the shared radius used by premium cards and controls. |
 | `content_max_width` | `1240` | Sets the maximum main-content width in pixels. |
 | `topic_density` | `comfortable` | Switches topic-list density between `comfortable` and `compact`. |
@@ -39,6 +39,7 @@ For an existing installation, use Discourse's normal theme update action to pull
 ## Compatibility principles
 - Native Discourse templates and routes are preferred over template takeovers.
 - Runtime colors derive from core Discourse CSS variables through eRespawn semantic tokens.
+- Topic discovery keeps native table/Glimmer markup, bulk-selection semantics, unread states and navigation behavior; the theme changes presentation only.
 - Avatar, nameplate and group-flair cosmetic layers must not be clipped, masked or replaced by the theme.
 - Bookmark bulk selection, reminders and action menus remain native Discourse behavior.
 - Private-message routes, inbox selectors, navigation and topic-list behavior remain native Discourse behavior.

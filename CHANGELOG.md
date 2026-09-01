@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.2.0 — 2026-09-01
+
+Topic-list redesign pass built on the merged 1.1.0 native Chat release.
+
+### Topic discovery redesign
+- Replaced the heavy nested-dashboard look with a cleaner social-feed-inspired single-surface hierarchy.
+- Removed boxed topic excerpts and changed them into restrained two-line supporting copy below the title.
+- Removed replies/views/activity pill chrome so stats read as secondary metadata instead of controls.
+- Strengthened topic-title hierarchy while reducing category/tag visual weight.
+- Reworked classic native topic-table rows and current Glimmer `.latest-topic-list-item` surfaces to share the same restrained visual language.
+
+### States and responsive behavior
+- Preserved unread/unseen accent edges, pinned tint, visited hierarchy, focus state and selected/bulk-selected visibility.
+- Removed elevated hover shadows and translate motion from topic discovery; desktop hover now uses subtle surface/border feedback only.
+- Added narrow-screen metadata/stat separation without introducing nested cards or hover dependency.
+- Kept native avatar/poster markup and cosmetic-owned wrappers unclipped.
+
+### Compatibility and quality
+- Introduced no theme JavaScript, topic-list template replacement or route override.
+- Kept native topic navigation, unread tracking, topic statuses, bulk selection and moderation behavior core-owned.
+- Merge remains gated by exact-head static Stylelint/Prettier and official Discourse Theme CI, including Ember Build and Theme System Tests.
+
 ## 1.1.0 — 2026-09-01
 
 Premium native Discourse Chat pass built on the merged 1.0.0 bulk-topic management release.
