@@ -143,8 +143,12 @@ html .latest-topic-list-item.visited .main-link .title {
       box-shadow: none;
     }
 
-    .topic-list-body .topic-list-item.unseen-topic > .topic-list-data:first-child,
-    .topic-list-body .topic-list-item.unread-posts > .topic-list-data:first-child {
+    .topic-list-body
+      .topic-list-item.unseen-topic
+      > .topic-list-data:first-child,
+    .topic-list-body
+      .topic-list-item.unread-posts
+      > .topic-list-data:first-child {
       border-inline-start: 3px solid var(--er-accent);
     }
 
