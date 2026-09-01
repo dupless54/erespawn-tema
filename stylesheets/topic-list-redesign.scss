@@ -3,7 +3,6 @@
 // Topic discovery should read like a clean social feed, not a stack of nested
 // dashboard cards. Keep native Discourse topic-list markup and interactions;
 // this module only changes presentation and state hierarchy.
-
 html .topic-list {
   .topic-list-header {
     border-bottom: 1px solid var(--er-border-soft);
